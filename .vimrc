@@ -5,8 +5,6 @@ filetype plugin indent on
 
 " netrwを使用するための設定
 set nocompatible
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "文字に関する設定
 set encoding=utf-8
@@ -21,7 +19,7 @@ set expandtab " タブ入力を複数の空白入力に置き換える
 set tabstop=4 " 画面上でタブ文字が占める幅
 set softtabstop=4 " 連続した空白に対してタブキーやバックスペースキーでカーソルが動く幅
 set autoindent " 改行時に前の行のインデントを継続する
-set smartindent " 改行時に前の行の構文をチェックし次の行のインデントを増減する
+"set smartindent " 改行時に前の行の構文をチェックし次の行のインデントを増減する
 set shiftwidth=4 " smartindentで増減する幅
 
 "文字列検索に関する設定
@@ -59,46 +57,66 @@ if &term =~ "xterm"
     inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
 endif
 
+" カッコの補完
+inoremap {<Enter> {}<Left><CR><ESC><S-o><Tab>
+inoremap [<Enter> []<Left><CR><ESC><S-o><Tab>
+inoremap (<Enter> ()<Left><CR><ESC><S-o><Tab>
+
+
 " ファイル拡張子別の設定
 if has("autocmd")
     filetype plugin indent on
-    autocmd FileType c           setlocal sw=2 sts=2 ts=2 noexpandtab
+    autocmd FileType c           setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType c           nnoremap <buffer> <C-i> <Home>i//<Esc>
     autocmd FileType c           nnoremap <buffer> <C-f> <Home>"_x"_x<Esc>
     autocmd FileType c           nnoremap <buffer> <C-b> :make
     autocmd FileType c           nnoremap <buffer> <C-e> :make run
+    autocmd Filetype c           inoremap <buffer> "" ""<Left>
+    autocmd Filetype c           inoremap <buffer> ()0 ()<Left>
 
-    autocmd FileType cpp         setlocal sw=2 sts=2 ts=2 noexpandtab
+    autocmd FileType cpp         setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType cpp         nnoremap <buffer> <C-i> <Home>i//<Esc>
     autocmd FileType cpp         nnoremap <buffer> <C-f> <Home>"_x"_x<Esc>
     autocmd FileType cpp         nnoremap <buffer> <C-b> :make
     autocmd FileType cpp         nnoremap <buffer> <C-e> :make run
+    autocmd Filetype cpp         inoremap <buffer> "" ""<Left>
+    autocmd Filetype cpp         inoremap <buffer> ()0 ()<Left>
 
-    autocmd FileType python      setlocal sw=2 sts=2 ts=2 noexpandtab
+    autocmd FileType python      setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType python      nnoremap <buffer> <C-i> <Home>i#<Esc>
     autocmd FileType python      nnoremap <buffer> <C-f> <Home>"_x<Esc>
     autocmd FileType python      nnoremap <buffer> <C-e> :terminal python3 %
+    autocmd Filetype python      inoremap <buffer> "" ""<Left>
 
-    autocmd FileType html        setlocal sw=2 sts=2 ts=2 noexpandtab
+    autocmd FileType html        setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType html        nnoremap <buffer> <C-i> <End>a--><Esc><Home>i<!--<Esc>
     autocmd FileType html        nnoremap <buffer> <C-f> <End>xxx<Esc><Home>xxxx<Esc>
+    autocmd Filetype html        inoremap <buffer> </ </<C-x><C-o><ESC>F<i
+    autocmd Filetype html        inoremap <buffer> "" ""<Left>
 
     autocmd FileType ruby        setlocal sw=2 sts=2 ts=2 noexpandtab
-    autocmd FileType js          setlocal sw=2 sts=2 ts=2 noexpandtab
+
+    autocmd FileType js          setlocal sw=4 sts=4 ts=4 noexpandtab
+
     autocmd FileType javasctipt  nnoremap <buffer> <C-i> <Home>i//<Esc>
     autocmd FileType javasctipt  nnoremap <buffer> <C-f> <Home>xx<Esc>
-    autocmd FileType zsh         setlocal sw=2 sts=2 ts=2 noexpandtab
+    autocmd Filetype javasctipt  inoremap <buffer> "" ""<Left>
 
-    autocmd FileType scala       setlocal sw=2 sts=2 ts=2 noexpandtab
-    autocmd FileType json        setlocal sw=2 sts=2 ts=2 noexpandtab
+    autocmd FileType zsh         setlocal sw=4 sts=4 ts=4 noexpandtab
 
-    autocmd FileType css         setlocal sw=2 sts=2 ts=2 noexpandtab
+    autocmd FileType scala       setlocal sw=4 sts=4 ts=4 noexpandtab
+
+    autocmd FileType json        setlocal sw=4 sts=4 ts=4 noexpandtab
+
+    autocmd FileType css         setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType css         nnoremap <buffer> <C-i> <End>a*/<Esc><Home>i/*<Esc>
     autocmd FileType css         nnoremap <buffer> <C-f> <End>xx<Esc><Home>xx<Esc>
+    autocmd Filetype css         inoremap <buffer> "" ""<Left>
 
-    autocmd FileType scss        setlocal sw=2 sts=2 ts=2 noexpandtab
-    autocmd FileType sass        setlocal sw=2 sts=2 ts=2 noexpandtab
+    autocmd FileType scss        setlocal sw=4 sts=4 ts=4 noexpandtab
+    autocmd FileType sass        setlocal sw=4 sts=4 ts=4 noexpandtab
 
     autocmd FileType sh          nnoremap <buffer> <C-i> <Home>i#<Esc>
     autocmd FileType sh          nnoremap <buffer> <C-f> <Home>x<Esc>
+    autocmd Filetype sh          inoremap <buffer> "" ""<Left>
 endif
