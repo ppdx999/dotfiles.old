@@ -1,5 +1,9 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_cnt =7
 let g:netrw_dirhist_1='/home/fujis/pra'
 let g:netrw_dirhist_2='/home/fujis'
 let g:netrw_dirhist_3='/home/fujis/code'
+let g:netrw_dirhist_4='/home/fujis/Downloads/HTML-CSS-Webdesign-2/chapter6/c6-03-6'
+let g:netrw_dirhist_5='/home/fujis'
+let g:netrw_dirhist_6='/home/fujis/Web'
+let g:netrw_dirhist_7='/home/fujis/Web/Cafe'

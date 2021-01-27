@@ -1,4 +1,29 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" Plugins will be downloaded under the specified directory.
+call plug#begin('~/.vim/plugged')
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Declare the list of plugins.
+Plug 'mattn/emmet-vim'
+Plug 'tpope/vim-surround'
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+" List ends here. Plugins become visible to Vim after this call.
+call plug#end()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" 検索後のハイライトを効率的に削除
+nnoremap  <C-c><C-c> :<C-u>nohlsearch<cr><Esc>
 
 " ファイルタイプ別のVimプラグイン/インデントを有効にする
 filetype plugin indent on
@@ -36,9 +61,6 @@ set laststatus=2 "最下ウィンドウにステータスを常に表示する
 set whichwrap=b,s,h,l,<,>,[,],~ " カーソルの左右移動で行末から次の行の行頭への移動が可能になる
 set number " 行番号を表示
 
-"ノーマルモードから改行を挿入できるように設定
-nnoremap O :<C-u>call append(expand('.'), '')<Cr>j
-
 "コマンド補完に関する設定
 set wildmenu " コマンドモードの補完
 set history=5000 " 保存するコマンド履歴の数
@@ -58,9 +80,9 @@ if &term =~ "xterm"
 endif
 
 " カッコの補完
-inoremap {<Enter> {}<Left><CR><ESC><S-o><Tab>
-inoremap [<Enter> []<Left><CR><ESC><S-o><Tab>
-inoremap (<Enter> ()<Left><CR><ESC><S-o><Tab>
+inoremap {<Enter> {}<Left><CR><ESC><S-o>
+inoremap [<Enter> []<Left><CR><ESC><S-o>
+inoremap (<Enter> ()<Left><CR><ESC><S-o>
 
 
 " ファイル拡張子別の設定
@@ -109,6 +131,7 @@ if has("autocmd")
     autocmd FileType json        setlocal sw=4 sts=4 ts=4 noexpandtab
 
     autocmd FileType css         setlocal sw=4 sts=4 ts=4 noexpandtab
+    autocmd FileType css         set omnifunc=csscomplete#CompleteCSS
     autocmd FileType css         nnoremap <buffer> <C-i> <End>a*/<Esc><Home>i/*<Esc>
     autocmd FileType css         nnoremap <buffer> <C-f> <End>xx<Esc><Home>xx<Esc>
     autocmd Filetype css         inoremap <buffer> "" ""<Left>
@@ -120,3 +143,28 @@ if has("autocmd")
     autocmd FileType sh          nnoremap <buffer> <C-f> <Home>x<Esc>
     autocmd Filetype sh          inoremap <buffer> "" ""<Left>
 endif
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""" 'mattn/emmet-vim'
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:user_emmet_mode = 'iv'
+  let g:user_emmet_leader_key = '<C-Y>'
+  let g:use_emmet_complete_tag = 1
+  let g:user_emmet_settings = {
+        \ 'lang' : 'ja',
+        \ 'html' : {
+        \   'filters' : 'html',
+        \ },
+        \ 'css' : {
+        \   'filters' : 'fc',
+        \ },
+        \ 'php' : {
+        \   'extends' : 'html',
+        \   'filters' : 'html',
+        \ },
+        \}
+  augroup EmmitVim
+    autocmd!
+    autocmd FileType * let g:user_emmet_settings.indentation = '               '[:&tabstop]
+  augroup END
