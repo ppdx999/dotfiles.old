@@ -11,6 +11,7 @@ call plug#begin('~/.vim/plugged')
 " Declare the list of plugins.
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-surround'
+Plug 'preservim/nerdtree'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -22,8 +23,6 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" 検索後のハイライトを効率的に削除
-nnoremap  <C-c><C-c> :<C-u>nohlsearch<cr><Esc>
 
 " ファイルタイプ別のVimプラグイン/インデントを有効にする
 filetype plugin indent on
@@ -81,10 +80,29 @@ endif
 
 " カッコの補完
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
-inoremap [<Enter> []<Left><CR><ESC><S-o>
-inoremap (<Enter> ()<Left><CR><ESC><S-o>
+inoremap ( ()<Left>
+inoremap [ []<Left>
+inoremap " ""<Left>
+inoremap ' ''<Left>
+inoremap ` ``<Left>
 
+" emacs風補完
+inoremap <C-b> <Left>
+inoremap <C-f> <Right>
+inoremap <C-a> <HOME>
+inoremap <C-e> <END>
 
+" NERDTREEを簡易的に開く
+nnoremap <C-x><C-f> :NERDTree<CR>
+
+" 分割ウィンドウの移動を楽にする
+nnoremap <C-l> <C-w>w
+
+" ESCを押しやすい場所に変更する"
+inoremap <C-g> <ESC>
+
+" 検索後のハイライトを効率的に削除
+nnoremap  <C-c><C-c> :<C-u>nohlsearch<cr><Esc>
 " ファイル拡張子別の設定
 if has("autocmd")
     filetype plugin indent on
@@ -93,28 +111,22 @@ if has("autocmd")
     autocmd FileType c           nnoremap <buffer> <C-f> <Home>"_x"_x<Esc>
     autocmd FileType c           nnoremap <buffer> <C-b> :make
     autocmd FileType c           nnoremap <buffer> <C-e> :make run
-    autocmd Filetype c           inoremap <buffer> "" ""<Left>
-    autocmd Filetype c           inoremap <buffer> ()0 ()<Left>
 
     autocmd FileType cpp         setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType cpp         nnoremap <buffer> <C-i> <Home>i//<Esc>
     autocmd FileType cpp         nnoremap <buffer> <C-f> <Home>"_x"_x<Esc>
     autocmd FileType cpp         nnoremap <buffer> <C-b> :make
     autocmd FileType cpp         nnoremap <buffer> <C-e> :make run
-    autocmd Filetype cpp         inoremap <buffer> "" ""<Left>
-    autocmd Filetype cpp         inoremap <buffer> ()0 ()<Left>
 
     autocmd FileType python      setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType python      nnoremap <buffer> <C-i> <Home>i#<Esc>
     autocmd FileType python      nnoremap <buffer> <C-f> <Home>"_x<Esc>
     autocmd FileType python      nnoremap <buffer> <C-e> :terminal python3 %
-    autocmd Filetype python      inoremap <buffer> "" ""<Left>
 
     autocmd FileType html        setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType html        nnoremap <buffer> <C-i> <End>a--><Esc><Home>i<!--<Esc>
     autocmd FileType html        nnoremap <buffer> <C-f> <End>xxx<Esc><Home>xxxx<Esc>
     autocmd Filetype html        inoremap <buffer> </ </<C-x><C-o><ESC>F<i
-    autocmd Filetype html        inoremap <buffer> "" ""<Left>
 
     autocmd FileType ruby        setlocal sw=2 sts=2 ts=2 noexpandtab
 
@@ -122,7 +134,6 @@ if has("autocmd")
 
     autocmd FileType javasctipt  nnoremap <buffer> <C-i> <Home>i//<Esc>
     autocmd FileType javasctipt  nnoremap <buffer> <C-f> <Home>xx<Esc>
-    autocmd Filetype javasctipt  inoremap <buffer> "" ""<Left>
 
     autocmd FileType zsh         setlocal sw=4 sts=4 ts=4 noexpandtab
 
@@ -134,14 +145,12 @@ if has("autocmd")
     autocmd FileType css         set omnifunc=csscomplete#CompleteCSS
     autocmd FileType css         nnoremap <buffer> <C-i> <End>a*/<Esc><Home>i/*<Esc>
     autocmd FileType css         nnoremap <buffer> <C-f> <End>xx<Esc><Home>xx<Esc>
-    autocmd Filetype css         inoremap <buffer> "" ""<Left>
 
     autocmd FileType scss        setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType sass        setlocal sw=4 sts=4 ts=4 noexpandtab
 
     autocmd FileType sh          nnoremap <buffer> <C-i> <Home>i#<Esc>
     autocmd FileType sh          nnoremap <buffer> <C-f> <Home>x<Esc>
-    autocmd Filetype sh          inoremap <buffer> "" ""<Left>
 endif
 
 
