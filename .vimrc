@@ -151,6 +151,8 @@ if has("autocmd")
 
     autocmd FileType sh          nnoremap <buffer> <C-i> <Home>i#<Esc>
     autocmd FileType sh          nnoremap <buffer> <C-f> <Home>x<Esc>
+
+    autocmd FileType text        colorscheme shine
 endif
 
 
