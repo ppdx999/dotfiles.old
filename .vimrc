@@ -1,27 +1,34 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Plugins will be downloaded under the specified directory.
 call plug#begin('~/.vim/plugged')
 
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Declare the list of plugins.
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" For java completion
+Plug 'artur-shaik/vim-javacomplete2'
+
+" For text alignment
+Plug 'junegunn/vim-easy-align'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 " ファイルタイプ別のVimプラグイン/インデントを有効にする
@@ -39,7 +46,7 @@ set fileformats=unix,dos,mac " 改行コードの自動判別. 左側が優先�
 set ambiwidth=double " □や○文字が崩れる問題を解決
 
 "タブに関する設定
-set expandtab " タブ入力を複数の空白入力に置き換える
+""set expandtab " タブ入力を複数の空白入力に置き換える
 set tabstop=4 " 画面上でタブ文字が占める幅
 set softtabstop=4 " 連続した空白に対してタブキーやバックスペースキーでカーソルが動く幅
 set autoindent " 改行時に前の行のインデントを継続する
@@ -86,26 +93,24 @@ inoremap " ""<Left>
 inoremap ' ''<Left>
 inoremap ` ``<Left>
 
-" emacs風補完
-inoremap <C-b> <Left>
-inoremap <C-f> <Right>
-inoremap <C-a> <HOME>
-inoremap <C-e> <END>
-
 " NERDTREEを簡易的に開く
 nnoremap <C-x><C-f> :NERDTree<CR>
 
 " 分割ウィンドウの移動を楽にする
 nnoremap <C-l> <C-w>w
 
-" ESCを押しやすい場所に変更する"
-inoremap <C-g> <ESC>
-
 " 検索後のハイライトを効率的に削除
 nnoremap  <C-c><C-c> :<C-u>nohlsearch<cr><Esc>
+
+
 " ファイル拡張子別の設定
 if has("autocmd")
     filetype plugin indent on
+
+	" 80行目以降の色を変える
+	autocmd FileType c,cpp,python,java,ruby,javascript,sh let &colorcolumn=join(range(81,999),",")
+	autocmd FileType c,cpp,python,java,ruby,javascript,sh hi ColorColumn ctermbg=235 guibg=#2c2d27 
+
     autocmd FileType c           setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType c           nnoremap <buffer> <C-i> <Home>i//<Esc>
     autocmd FileType c           nnoremap <buffer> <C-f> <Home>"_x"_x<Esc>
@@ -122,6 +127,18 @@ if has("autocmd")
     autocmd FileType python      nnoremap <buffer> <C-i> <Home>i#<Esc>
     autocmd FileType python      nnoremap <buffer> <C-f> <Home>"_x<Esc>
     autocmd FileType python      nnoremap <buffer> <C-e> :terminal python3 %
+
+	autocmd FileType java		setlocal omnifunc=javacomplete#Complete
+	autocmd FileType java		let g:JavaComplete_SourcesPath = "~/javafx-sdk-16/src/"
+	""autocmd FileType java		let g:JavaComplete_LibsPath = "~/javafx-sdk-16/lib/"
+	autocmd FileType java		map <F4> <Plug>(JavaComplete-Imports-AddSmart)
+	autocmd FileType java		map <F4> <Plug>(JavaComplete-Imports-AddSmart)
+	autocmd FileType java		map <F5> <Plug>(JavaComplete-Imports-Add)
+	autocmd FileType java		map <F5> <Plug>(JavaComplete-Imports-Add)
+	autocmd FileType java		map <F6> <Plug>(JavaComplete-Imports-AddMissing)
+	autocmd FileType java		map <F6> <Plug>(JavaComplete-Imports-AddMissing)
+	autocmd FileType java		map <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+	autocmd FileType java		map <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
 
     autocmd FileType html        setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType html        nnoremap <buffer> <C-i> <End>a--><Esc><Home>i<!--<Esc>
@@ -151,14 +168,15 @@ if has("autocmd")
 
     autocmd FileType sh          nnoremap <buffer> <C-i> <Home>i#<Esc>
     autocmd FileType sh          nnoremap <buffer> <C-f> <Home>x<Esc>
+    autocmd FileType sh          setlocal sw=2 sts=2 ts=2 noexpandtab
 
     autocmd FileType text        colorscheme shine
 endif
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ 'mattn/emmet-vim'
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:user_emmet_mode = 'iv'
   let g:user_emmet_leader_key = '<C-Y>'
   let g:use_emmet_complete_tag = 1
@@ -179,3 +197,4 @@ let g:user_emmet_mode = 'iv'
     autocmd!
     autocmd FileType * let g:user_emmet_settings.indentation = '               '[:&tabstop]
   augroup END
+
