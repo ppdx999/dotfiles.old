@@ -89,9 +89,6 @@ endif
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap ( ()<Left>
 inoremap [ []<Left>
-inoremap " ""<Left>
-inoremap ' ''<Left>
-inoremap ` ``<Left>
 
 " NERDTREEを簡易的に開く
 nnoremap <C-x><C-f> :NERDTree<CR>
