@@ -87,8 +87,8 @@ endif
 
 " カッコの補完
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
-inoremap ( ()<Left>
-inoremap [ []<Left>
+"inoremap ( ()<Left>
+"inoremap [ []<Left>
 
 " NERDTREEを簡易的に開く
 nnoremap <C-x><C-f> :NERDTree<CR>
@@ -167,7 +167,7 @@ if has("autocmd")
     autocmd FileType sh          nnoremap <buffer> <C-f> <Home>x<Esc>
     autocmd FileType sh          setlocal sw=2 sts=2 ts=2 noexpandtab
 
-    autocmd FileType text        colorscheme shine
+    "autocmd FileType text        colorscheme shine
 endif
 
 
