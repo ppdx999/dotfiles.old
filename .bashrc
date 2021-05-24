@@ -122,4 +122,3 @@ PATH="$PATH:$HOME/bin"
 PATH="$HOME/.local/bin:$PATH"
 HISTSIZE=20000
 HISTFILESIZE=20000
-. "$HOME/.cargo/env"
