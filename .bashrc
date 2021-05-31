@@ -116,9 +116,21 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PS1='\[\e[1;32m\]\u\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]:$\[\e[0m\] '
-alias ls='ls --color=auto -F'
-PATH="$PATH:$HOME/bin"
-PATH="$HOME/.local/bin:$PATH"
-HISTSIZE=20000
-HISTFILESIZE=20000
+# My Settings
+
+if [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
+	export PS1='\[\e[1;32m\]\u\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]:$\[\e[0m\] '
+	alias ls='ls --color=auto -F'
+	PATH="$PATH:$HOME/bin"
+	PATH="$HOME/.local/bin:$PATH"
+	HISTSIZE=20000
+	HISTFILESIZE=20000
+elif [ "$(expr substr $(uname -s) 1 10)" == 'MINGW64_NT' ]; then
+	export PS1='\[\e[1;32m\]\u\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]:$\[\e[0m\] '
+	alias ls='ls --color=auto -F'
+	PATH="$PATH:$HOME/bin"
+	PATH="$HOME/.local/bin:$PATH"
+	HISTSIZE=20000
+	HISTFILESIZE=20000
+	export MSYS=winsymlinks:nativestrict
+fi

@@ -65,12 +65,17 @@ set hlsearch " 検索結果をハイライト
 set wildmenu " コマンドモードの補完
 set history=5000 " 保存するコマンド履歴の数
 
-set clipboard=unnamedplus " Connect vim's cripboard with Unix systems' one. This setting should be removed at windows' git bash.
 set laststatus=2 "最下ウィンドウにステータスを常に表示する
-:syntax on "構文ハイライトを有効にする
+syntax on "構文ハイライトを有効にする
 set whichwrap=b,s,h,l,<,>,[,],~ " カーソルの左右移動で行末から次の行の行頭への移動が可能になる
 set number
 set nowrap
+
+if has("win64") || has("win32") || has("win16")
+	
+else
+	set clipboard=unnamedplus " Connect vim's cripboard with Unix systems' one. This setting should be removed at windows' git bash.
+endif
 
 
 "クリップボードからのペースト時の自動インデントのズレを調整する
