@@ -1,40 +1,32 @@
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" #########  Plugin Mnager ##########
+if filereadable(expand('~/.vim/autoload/plug.vim'))
 
-" Plugins will be downloaded under the specified directory.
-call plug#begin('~/.vim/plugged')
+	" Plugins will be downloaded under the specified directory.
+	call plug#begin('~/.vim/plugged')
 
+	""""""""""""""""""""""""""""""""""""""""
+	" Declare the list of plugins.
+	Plug 'mattn/emmet-vim'
+	Plug 'tpope/vim-surround'
+	Plug 'preservim/nerdtree'
 
+	" For java completion
+	Plug 'artur-shaik/vim-javacomplete2'
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Declare the list of plugins.
-Plug 'mattn/emmet-vim'
-Plug 'tpope/vim-surround'
-Plug 'preservim/nerdtree'
+	" For text alignment
+	Plug 'junegunn/vim-easy-align'
 
-" For java completion
-Plug 'artur-shaik/vim-javacomplete2'
+	""""""""""""""""""""""""""""""""""""""""
 
-" For text alignment
-Plug 'junegunn/vim-easy-align'
+	" List ends here. Plugins become visible to Vim after this call.
+	call plug#end()
+endif
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-
-" List ends here. Plugins become visible to Vim after this call.
-call plug#end()
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-" ファイルタイプ別のVimプラグイン/インデントを有効にする
-filetype plugin indent on
 
 "#########  set vim's env var  ##########
+
+" Enable vim plugins and indent by file type
+filetype plugin indent on
 
 " netrwを使用するための設定
 set nocompatible
@@ -56,14 +48,14 @@ set autoindent " 改行時に前の行のインデントを継続する
 set shiftwidth=4 " smartindentで増減する幅
 
 " Settings about Search
-set incsearch " インクリメンタルサーチ. １文字入力毎に検索を行う
-set ignorecase " 検索パターンに大文字小文字を区別しない
-set smartcase " 検索パターンに大文字を含んでいたら大文字小文字を区別する
-set hlsearch " 検索結果をハイライト
+set incsearch " Perform a search everytime you type a single character.
+set ignorecase
+set smartcase " Make the search pattern case-sensitive if it contains uppercase letters.
+set hlsearch " Highlighting search results.
 
 " Settings about Command Completion
-set wildmenu " コマンドモードの補完
-set history=5000 " 保存するコマンド履歴の数
+set wildmenu " Completion in command mode.
+set history=5000 " Number of command histories to save.
 
 set laststatus=2 "最下ウィンドウにステータスを常に表示する
 syntax on "構文ハイライトを有効にする
@@ -72,9 +64,8 @@ set number
 set nowrap
 
 if has("win64") || has("win32") || has("win16")
-	
+	set clipboard=unnamedplus
 else
-	set clipboard=unnamedplus " Connect vim's cripboard with Unix systems' one. This setting should be removed at windows' git bash.
 endif
 
 
