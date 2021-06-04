@@ -22,14 +22,17 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
 	call plug#end()
 endif
 
+"#########  ftdetect  ##########
 
 "#########  set vim's env var  ##########
 
 " Enable vim plugins and indent by file type
-filetype plugin indent on
+"filetype plugin indent on
 
 " netrwを使用するための設定
 set nocompatible
+
+set textwidth=0 " Disable automatic line break feature.
 
 " Settings about Chracter
 set encoding=utf-8
@@ -112,6 +115,10 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 if has("autocmd")
     filetype plugin indent on
 
+	"#########  ftdetect  ##########
+	autocmd BufNewFile,BufRead *.md	set filetype=markdown
+	autocmd BufNewFile,BufRead *.txt set filetype=text
+
 	" 80行目以降の色を変える
 	autocmd FileType c,cpp,python,java,ruby,javascript,sh let &colorcolumn=join(range(81,999),",")
 	autocmd FileType c,cpp,python,java,ruby,javascript,sh hi ColorColumn ctermbg=235 guibg=#2c2d27 
@@ -179,13 +186,40 @@ if has("autocmd")
 
     autocmd FileType vim         setlocal foldmethod=marker 
 
-    "autocmd FileType text        colorscheme shine
+	autocmd FileType markdown,text    let maplocalleader = ";"
+	" Make selected text Bold
+    autocmd FileType markdown,text    vnoremap <buffer> <localleader>b :<c-u>call <SID>InsTxtAroundSelection( visualmode(), '**' , '**')<CR>
+    autocmd FileType markdown,text    nnoremap <buffer> <localleader>ub F*hvldf*vld
+	" Make selected text inline code
+    autocmd FileType markdown,text    vnoremap <buffer> <localleader>i :<c-u>call <SID>InsTxtAroundSelection( visualmode(), '`', '`')<CR>
+    autocmd FileType markdown,text    nnoremap <buffer> <localleader>ui F`xf`x
+	" Make selected text color Blue
+    autocmd FileType markdown,text    vnoremap <buffer> <localleader>fb :<c-u>call <SID>InsTxtAroundSelection( visualmode(), '<span style="color: blue;">', '</span>')<CR>
+	" Make selected text color Red
+    autocmd FileType markdown,text    vnoremap <buffer> <localleader>fr :<c-u>call <SID>InsTxtAroundSelection( visualmode(), '<span style="color: red;">', '</span>')<CR>
+	" Delete color
+    autocmd FileType markdown,text    nnoremap <buffer> <localleader>uf vityvatp
+	" Make selected text Code Block
+    autocmd FileType markdown,text    vnoremap <buffer> <localleader>c :<c-u>call <SID>InsTxtAroundSelection( visualmode(), '<pre><code class="prettyprint linenums">', '</code></pre>')<CR>
+    autocmd FileType markdown,text    nnoremap <buffer> <localleader>uc vityvatpvityvatpmm`]dd`mdd
+	" Make selected text List
+    autocmd FileType markdown,text    vnoremap <buffer> <localleader>l :<c-u>call <SID>MarkdownFormatList()<CR>:nohlsearch<CR>
+	autocmd FileType markdown,text    vnoremap <buffer> <localleader>ul :s/\(\t*\)[*+-] /\1/<CR>:nohlsearch<CR>
+	" Make selected text List with numbers
+    autocmd FileType markdown,text    vnoremap <buffer> <localleader>n :s/\(^[^\d][^.]\)/1. \1/<CR>:nohlsearch<CR>
+	autocmd FileType markdown,text    vnoremap <buffer> <localleader>un :s/^\d. //<CR>:nohlsearch<CR>
+	" Make selected or current line's text quote
+    autocmd FileType markdown,text    nnoremap <buffer> <localleader>q :s/\(^[^>]\)/> \1/<CR>:nohlsearch<CR>
+    autocmd FileType markdown,text    vnoremap <buffer> <localleader>q :s/\(^[^>]\)/> \1/<CR>:nohlsearch<CR>
+    autocmd FileType markdown,text    nnoremap <buffer> <localleader>uq :s/^> //<CR>:nohlsearch<CR>
+    autocmd FileType markdown,text    vnoremap <buffer> <localleader>uq :s/^> //<CR>:nohlsearch<CR>
+	" Mapping for PlantUml Swap Left to Right
+    autocmd FileType markdown,text    nnoremap <buffer> <localleader>ps :s/\([^-<>:]*\)\s\s*\(<*--*>*\)\s\s*\([^-<>:]*\)/\3 \2 \1/<CR>:nohlsearch<CR>
+ 
 endif
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""" 'mattn/emmet-vim'
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"#########  matten/emmet-vim  ##########
 let g:user_emmet_mode = 'iv'
   let g:user_emmet_leader_key = '<C-Y>'
   let g:use_emmet_complete_tag = 1
@@ -207,3 +241,27 @@ let g:user_emmet_mode = 'iv'
     autocmd FileType * let g:user_emmet_settings.indentation = '               '[:&tabstop]
   augroup END
 
+"#########  MyVIMscript Test ##########
+
+function! s:InsTxtAroundSelection(type, leftText, rightText)
+	let saved_unnamed_register = @@
+	
+	if a:type ==# 'v'
+		normal! `<v`>d
+		execute "normal! i" . a:leftText . @@ . a:rightText
+	elseif a:type ==# 'V'
+		execute "normal! `<O" . a:leftText
+		execute "normal! `>o" . a:rightText
+	endif
+
+	let @@ = saved_unnamed_register
+endfunction
+
+function! s:MarkdownFormatList()
+	normal! `<v`>
+	execute "normal! :s/^\\t\\t\\([^-\\s\\t]\\)/\\t\\t- \\1/\<CR>"
+	normal! `<v`>
+	execute "normal! :s/^\\t\\([^-+\\s\\t]\\)/\\t+ \\1/\<CR>"
+	normal! `<v`>
+	execute "normal! :s/^\\([^-**\\s\\t]\\)/* \\1/\<CR>"
+endfunction
