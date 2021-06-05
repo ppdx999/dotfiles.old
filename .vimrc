@@ -232,6 +232,9 @@ if has("autocmd")
     autocmd FileType markdown,text    vnoremap <buffer> <localleader>q :s/\(^[^>]\)/> \1/<CR>:nohlsearch<CR>
     autocmd FileType markdown,text    nnoremap <buffer> <localleader>uq :s/^> //<CR>:nohlsearch<CR>
     autocmd FileType markdown,text    vnoremap <buffer> <localleader>uq :s/^> //<CR>:nohlsearch<CR>
+	" Open Plantuml File under cursor
+    autocmd FileType markdown,text    nnoremap <buffer> <localleader>pwe vi(:<c-u>call <SID>OpenPlantumlUnderCursor("e")<CR>
+    autocmd FileType markdown,text    nnoremap <buffer> <localleader>pwv vi(:<c-u>call <SID>OpenPlantumlUnderCursor("vsplit")<CR>
 	" Mapping for PlantUml Swap Left to Right
     autocmd FileType markdown,text,plantuml    nnoremap <buffer> <localleader>ps :s/\([^-<>:]*\)\s\s*\([ox<*\|//]*--*[ox>*\|\\]*\)\s\s*\([^-<>:]*\)\s*/\3 \2 \1 /<CR>:nohlsearch<CR>
 
@@ -273,6 +276,18 @@ function! s:InsTxtAroundSelection(type, leftText, rightText)
 		execute "normal! `<O" . a:leftText
 		execute "normal! `>o" . a:rightText
 	endif
+
+	let @@ = saved_unnamed_register
+endfunction
+
+
+function! s:OpenPlantumlUnderCursor(command)
+	let saved_unnamed_register = @@
+
+	normal! `<v`>y
+	let l:filepath = substitute(@@, ".png", ".pu", "")
+	let l:filepath = substitute(l:filepath, ".svg", ".pu", "")
+	execute a:command . " " . l:filepath
 
 	let @@ = saved_unnamed_register
 endfunction
