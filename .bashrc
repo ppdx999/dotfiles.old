@@ -133,4 +133,7 @@ elif [ "$(expr substr $(uname -s) 1 10)" == 'MINGW64_NT' ]; then
 	HISTSIZE=20000
 	HISTFILESIZE=20000
 	export MSYS=winsymlinks:nativestrict
+	if [ -f ~/lib/ctags/ctags.exe ]; then
+		PATH="$PATH:$HOME/lib/ctags"
+	fi
 fi

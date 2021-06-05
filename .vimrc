@@ -26,10 +26,13 @@ endif
 
 "#########  set vim's env var  ##########
 
-" Enable vim plugins and indent by file type
-"filetype plugin indent on
+if v:version >= 600
+  filetype plugin on
+  filetype indent on
+else
+  filetype on
+endif
 
-" netrwを使用するための設定
 set nocompatible
 
 set textwidth=0 " Disable automatic line break feature.
@@ -111,17 +114,32 @@ nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 " Quickly Reload ~/.vimrc
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
-" ファイル拡張子別の設定
+" Automatically execute ctags
+"autocmd BufWritePost * call system("ctags -R")
+"nnoremap <C-]> g<C-]>
+
+" Completion using a syntax file
+if has("autocmd") && exists("+omnifunc")
+  autocmd Filetype *
+          \	if &omnifunc == "" |
+          \		setlocal omnifunc=syntaxcomplete#Complete |
+          \	endif
+endif
+
 if has("autocmd")
-    filetype plugin indent on
 
 	"#########  ftdetect  ##########
 	autocmd BufNewFile,BufRead *.md	set filetype=markdown
 	autocmd BufNewFile,BufRead *.txt set filetype=text
+	autocmd BufRead,BufNewFile * if !did_filetype() && getline(1) =~# '@startuml\>'| setfiletype plantuml | endif
+	autocmd BufRead,BufNewFile *.pu,*.uml,*.plantuml,*.puml,*.iuml set filetype=plantuml
 
-	" 80行目以降の色を変える
+	" Change the background color of columns 80 and beyond.
 	autocmd FileType c,cpp,python,java,ruby,javascript,sh let &colorcolumn=join(range(81,999),",")
 	autocmd FileType c,cpp,python,java,ruby,javascript,sh hi ColorColumn ctermbg=235 guibg=#2c2d27 
+
+
+	autocmd FileType sh,markdown,text,plantuml    let maplocalleader = ";"
 
     autocmd FileType c           setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType c           nnoremap <buffer> <C-i> <Home>i//<Esc>
@@ -182,11 +200,12 @@ if has("autocmd")
     autocmd FileType sh          nnoremap <buffer> <C-i> <Home>i#<Esc>
     autocmd FileType sh          nnoremap <buffer> <C-f> <Home>x<Esc>
     autocmd FileType sh          setlocal sw=2 sts=2 ts=2 noexpandtab
-
+	if filereadable(expand('~/format/fmt.sh'))
+		autocmd FileType sh          nnoremap <buffer> <localleader>zz gg:r !cat ~/format/fmt.sh<CR>ggdd
+	endif
 
     autocmd FileType vim         setlocal foldmethod=marker 
 
-	autocmd FileType markdown,text    let maplocalleader = ";"
 	" Make selected text Bold
     autocmd FileType markdown,text    vnoremap <buffer> <localleader>b :<c-u>call <SID>InsTxtAroundSelection( visualmode(), '**' , '**')<CR>
     autocmd FileType markdown,text    nnoremap <buffer> <localleader>ub F*hvldf*vld
@@ -214,7 +233,8 @@ if has("autocmd")
     autocmd FileType markdown,text    nnoremap <buffer> <localleader>uq :s/^> //<CR>:nohlsearch<CR>
     autocmd FileType markdown,text    vnoremap <buffer> <localleader>uq :s/^> //<CR>:nohlsearch<CR>
 	" Mapping for PlantUml Swap Left to Right
-    autocmd FileType markdown,text    nnoremap <buffer> <localleader>ps :s/\([^-<>:]*\)\s\s*\(<*--*>*\)\s\s*\([^-<>:]*\)/\3 \2 \1/<CR>:nohlsearch<CR>
+    autocmd FileType markdown,text,plantuml    nnoremap <buffer> <localleader>ps :s/\([^-<>:]*\)\s\s*\([ox<*\|//]*--*[ox>*\|\\]*\)\s\s*\([^-<>:]*\)\s*/\3 \2 \1 /<CR>:nohlsearch<CR>
+
  
 endif
 
