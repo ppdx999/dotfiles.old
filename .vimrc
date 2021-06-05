@@ -22,8 +22,6 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
 	call plug#end()
 endif
 
-"#########  ftdetect  ##########
-
 "#########  set vim's env var  ##########
 
 if v:version >= 600
@@ -94,18 +92,20 @@ endif
 " map leader
 let mapleader = ","
 
-" カッコの補完
+" completion of parentheses
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 "inoremap ( ()<Left>
 "inoremap [ []<Left>
 
-" NERDTREEを簡易的に開く
-nnoremap <C-x><C-f> :NERDTree<CR>
+if isdirectory(expand('~/.vim/plugged/nerdtree'))
+	" Quickly Open NERDTree
+	nnoremap <C-x><C-f> :NERDTree<CR>
+endif
 
-" 分割ウィンドウの移動を楽にする
+" Quickly move another window
 nnoremap <C-l> <C-w>w
 
-" 検索後のハイライトを効率的に削除
+" Quickly remove highlishts
 nnoremap  <C-c><C-c> :<C-u>nohlsearch<cr><Esc>
 
 " Quickly Open ~/.vimrc
@@ -113,6 +113,14 @@ nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 
 " Quickly Reload ~/.vimrc
 nnoremap <leader>sv :source $MYVIMRC<CR>
+
+" Surround selected text with ( ,' or " and cancel it.
+vnoremap s( :<c-u>call <SID>InsTxtAroundSelection( 'inline', '(', ')')<CR>
+vnoremap s' :<c-u>call <SID>InsTxtAroundSelection( 'inline', "'", "'")<CR>
+vnoremap s" :<c-u>call <SID>InsTxtAroundSelection( 'inline', '"', '"')<CR>
+nnoremap <leader>u( vi(yva(p
+nnoremap <leader>u' vi'yva'p
+nnoremap <leader>u" vi"yva"p
 
 " Automatically execute ctags
 "autocmd BufWritePost * call system("ctags -R")
@@ -207,19 +215,19 @@ if has("autocmd")
     autocmd FileType vim         setlocal foldmethod=marker 
 
 	" Make selected text Bold
-    autocmd FileType markdown,text    vnoremap <buffer> <localleader>b :<c-u>call <SID>InsTxtAroundSelection( visualmode(), '**' , '**')<CR>
+    autocmd FileType markdown,text    vnoremap <buffer> <localleader>b :<c-u>call <SID>InsTxtAroundSelection( 'inline', '**' , '**')<CR>
     autocmd FileType markdown,text    nnoremap <buffer> <localleader>ub F*hvldf*vld
 	" Make selected text inline code
-    autocmd FileType markdown,text    vnoremap <buffer> <localleader>i :<c-u>call <SID>InsTxtAroundSelection( visualmode(), '`', '`')<CR>
+    autocmd FileType markdown,text    vnoremap <buffer> <localleader>i :<c-u>call <SID>InsTxtAroundSelection( 'inline', '`', '`')<CR>
     autocmd FileType markdown,text    nnoremap <buffer> <localleader>ui F`xf`x
 	" Make selected text color Blue
-    autocmd FileType markdown,text    vnoremap <buffer> <localleader>fb :<c-u>call <SID>InsTxtAroundSelection( visualmode(), '<span style="color: blue;">', '</span>')<CR>
+    autocmd FileType markdown,text    vnoremap <buffer> <localleader>fb :<c-u>call <SID>InsTxtAroundSelection( 'inline', '<span style="color: blue;">', '</span>')<CR>
 	" Make selected text color Red
-    autocmd FileType markdown,text    vnoremap <buffer> <localleader>fr :<c-u>call <SID>InsTxtAroundSelection( visualmode(), '<span style="color: red;">', '</span>')<CR>
+    autocmd FileType markdown,text    vnoremap <buffer> <localleader>fr :<c-u>call <SID>InsTxtAroundSelection( 'inline', '<span style="color: red;">', '</span>')<CR>
 	" Delete color
     autocmd FileType markdown,text    nnoremap <buffer> <localleader>uf vityvatp
 	" Make selected text Code Block
-    autocmd FileType markdown,text    vnoremap <buffer> <localleader>c :<c-u>call <SID>InsTxtAroundSelection( visualmode(), '<pre><code class="prettyprint linenums">', '</code></pre>')<CR>
+    autocmd FileType markdown,text    vnoremap <buffer> <localleader>c :<c-u>call <SID>InsTxtAroundSelection( 'block', '<pre><code class="prettyprint linenums">', '</code></pre>')<CR>
     autocmd FileType markdown,text    nnoremap <buffer> <localleader>uc vityvatpvityvatpmm`]dd`mdd
 	" Make selected text List
     autocmd FileType markdown,text    vnoremap <buffer> <localleader>l :<c-u>call <SID>MarkdownFormatList()<CR>:nohlsearch<CR>
@@ -269,17 +277,20 @@ let g:user_emmet_mode = 'iv'
 function! s:InsTxtAroundSelection(type, leftText, rightText)
 	let saved_unnamed_register = @@
 	
-	if a:type ==# 'v'
+	if a:type ==# 'inline'
 		normal! `<v`>d
-		execute "normal! i" . a:leftText . @@ . a:rightText
-	elseif a:type ==# 'V'
+		if @@ =~# '\n$'
+			execute "normal! i" . a:leftText . substitute(@@, "\n", "", "") . a:rightText . "\n"
+		else
+			execute "normal! i" . a:leftText . @@ . a:rightText
+		endif
+	elseif a:type ==# 'block'
 		execute "normal! `<O" . a:leftText
 		execute "normal! `>o" . a:rightText
 	endif
 
 	let @@ = saved_unnamed_register
 endfunction
-
 
 function! s:OpenPlantumlUnderCursor(command)
 	let saved_unnamed_register = @@
