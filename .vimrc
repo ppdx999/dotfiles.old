@@ -22,6 +22,12 @@ if filereadable(expand('~/.vim/autoload/plug.vim')) && !has("gui_running")
 	call plug#end()
 endif
 
+
+"######### gvim Settings ##########
+if has("gui_running")
+	set guifont=Nsimsun:h12
+endif
+
 "#########  set vim's env var  ##########
 
 if v:version >= 600
@@ -68,8 +74,9 @@ set number
 set nowrap
 
 if has("win64") || has("win32") || has("win16")
-	set clipboard=unnamedplus
+	set clipboard=unnamed
 else
+	set clipboard=unnamedplus
 endif
 
 
