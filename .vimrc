@@ -122,6 +122,13 @@ nnoremap <leader>u( vi(yva(p
 nnoremap <leader>u' vi'yva'p
 nnoremap <leader>u" vi"yva"p
 
+"Quickly move cursor in insert mode.
+inoremap <C-h> <left>
+inoremap <C-j> <down>
+inoremap <C-k> <up>
+inoremap <C-l> <right>
+
+
 " Automatically execute ctags
 "autocmd BufWritePost * call system("ctags -R")
 "nnoremap <C-]> g<C-]>
