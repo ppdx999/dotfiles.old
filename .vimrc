@@ -1,5 +1,5 @@
 " #########  Plugin Mnager ##########
-if filereadable(expand('~/.vim/autoload/plug.vim'))
+if filereadable(expand('~/.vim/autoload/plug.vim')) && !has("gui_running")
 
 	" Plugins will be downloaded under the specified directory.
 	call plug#begin('~/.vim/plugged')
