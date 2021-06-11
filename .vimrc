@@ -26,6 +26,7 @@ endif
 "######### gvim Settings ##########
 if has("gui_running")
 	set guifont=Nsimsun:h12
+	set backspace=indent,eol,start
 endif
 
 "#########  set vim's env var  ##########
@@ -73,9 +74,14 @@ set whichwrap=b,s,h,l,<,>,[,],~ " カーソルの左右移動で行末から次�
 set number
 set nowrap
 
+
 if has("win64") || has("win32") || has("win16")
+	if has("gui_running")
+		set clipboard=unnamed
+	endif
+elseif substitute(system("expr substr $(uname -s) 1 10"), "\n", "", "") ==# 'MINGW64_NT'
 	set clipboard=unnamed
-else
+elseif substitute(system("expr substr $(uname -s) 1 5"), "\n", "", "") ==# 'Linux'
 	set clipboard=unnamedplus
 endif
 
@@ -134,7 +140,8 @@ inoremap <C-h> <left>
 inoremap <C-j> <down>
 inoremap <C-k> <up>
 inoremap <C-l> <right>
-
+inoremap <C-a> <home>
+inoremap <C-e> <end>
 
 " Automatically execute ctags
 "autocmd BufWritePost * call system("ctags -R")
@@ -222,11 +229,10 @@ if has("autocmd")
     autocmd FileType sh          nnoremap <buffer> <C-i> <Home>i#<Esc>
     autocmd FileType sh          nnoremap <buffer> <C-f> <Home>x<Esc>
     autocmd FileType sh          setlocal sw=2 sts=2 ts=2 noexpandtab
-	if filereadable(expand('~/format/fmt.sh'))
-		autocmd FileType sh          nnoremap <buffer> <localleader>zz gg:r !cat ~/format/fmt.sh<CR>ggdd
-	endif
 
     autocmd FileType vim         setlocal foldmethod=marker 
+
+	autocmd FileType markdown,text    setlocal spell spelllang=en_us
 
 	" Make selected text Bold
     autocmd FileType markdown,text    vnoremap <buffer> <localleader>b :<c-u>call <SID>InsTxtAroundSelection( 'inline', '**' , '**')<CR>
@@ -260,6 +266,13 @@ if has("autocmd")
 	" Mapping for PlantUml Swap Left to Right
     autocmd FileType markdown,text,plantuml    nnoremap <buffer> <localleader>ps :s/\([^-<>:]*\)\s\s*\([ox<*\|//]*--*[ox>*\|\\]*\)\s\s*\([^-<>:]*\)\s*/\3 \2 \1 /<CR>:nohlsearch<CR>
 
+	" Write format
+	if filereadable(expand('~/format/fmt.sh'))
+		autocmd FileType sh          nnoremap <buffer> <localleader>zz gg:r !cat ~/format/fmt.sh<CR>ggdd
+	endif
+	if filereadable(expand('~/format/fmt.md'))
+		autocmd FileType markdown          nnoremap <buffer> <localleader>zz gg:r !cat ~/format/fmt.md<CR>ggdd
+	endif
  
 endif
 
