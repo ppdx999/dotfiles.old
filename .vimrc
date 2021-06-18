@@ -10,9 +10,6 @@ if filereadable(expand('~/.vim/autoload/plug.vim')) && !has("gui_running")
 	Plug 'tpope/vim-surround'
 	Plug 'preservim/nerdtree'
 
-	" For java completion
-	Plug 'artur-shaik/vim-javacomplete2'
-
 	" For text alignment
 	Plug 'junegunn/vim-easy-align'
 
@@ -112,14 +109,11 @@ inoremap {<Enter> {}<Left><CR><ESC><S-o>
 
 if isdirectory(expand('~/.vim/plugged/nerdtree'))
 	" Quickly Open NERDTree
-	nnoremap <C-x><C-f> :NERDTree<CR>
+	nnoremap <leader>wf :NERDTree<CR>
 endif
 
-" Quickly move another window
-nnoremap <C-l> <C-w>w
-
 " Quickly remove highlishts
-nnoremap  <C-c><C-c> :<C-u>nohlsearch<cr><Esc>
+nnoremap  <leader>cc :<C-u>nohlsearch<cr><Esc>
 
 " Quickly Open ~/.vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
@@ -135,13 +129,20 @@ nnoremap <leader>u( vi(yva(p
 nnoremap <leader>u' vi'yva'p
 nnoremap <leader>u" vi"yva"p
 
+
+" Easy to trigger Completion
+inoremap <c-f> <c-x><c-o>
+inoremap <c-d> <c-x><c-k>
+
 "Quickly move cursor in insert mode.
-inoremap <C-h> <left>
-inoremap <C-j> <down>
-inoremap <C-k> <up>
-inoremap <C-l> <right>
-inoremap <C-a> <home>
-inoremap <C-e> <end>
+if 0
+	inoremap <C-h> <left>
+	inoremap <C-j> <down>
+	inoremap <C-k> <up>
+	inoremap <C-l> <right>
+	inoremap <C-a> <home>
+	inoremap <C-e> <end>
+endif
 
 " Automatically execute ctags
 "autocmd BufWritePost * call system("ctags -R")
@@ -188,17 +189,10 @@ if has("autocmd")
     autocmd FileType python      nnoremap <buffer> <C-f> <Home>"_x<Esc>
     autocmd FileType python      nnoremap <buffer> <C-e> :terminal python3 %
 
-	autocmd FileType java		setlocal omnifunc=javacomplete#Complete
-	autocmd FileType java		let g:JavaComplete_SourcesPath = "~/javafx-sdk-16/src/"
-	""autocmd FileType java		let g:JavaComplete_LibsPath = "~/javafx-sdk-16/lib/"
-	autocmd FileType java		map <F4> <Plug>(JavaComplete-Imports-AddSmart)
-	autocmd FileType java		map <F4> <Plug>(JavaComplete-Imports-AddSmart)
-	autocmd FileType java		map <F5> <Plug>(JavaComplete-Imports-Add)
-	autocmd FileType java		map <F5> <Plug>(JavaComplete-Imports-Add)
-	autocmd FileType java		map <F6> <Plug>(JavaComplete-Imports-AddMissing)
-	autocmd FileType java		map <F6> <Plug>(JavaComplete-Imports-AddMissing)
-	autocmd FileType java		map <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
-	autocmd FileType java		map <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+    autocmd FileType java         setlocal sw=4 sts=4 ts=4 noexpandtab
+    autocmd FileType java         nnoremap <buffer> <C-i> <Home>i//<Esc>
+    autocmd FileType java         nnoremap <buffer> <C-f> <Home>"_x"_x<Esc>
+    autocmd FileType java         set dictionary=~/.vim/dict/j2se14.dict
 
     autocmd FileType html        setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType html        nnoremap <buffer> <C-i> <End>a--><Esc><Home>i<!--<Esc>
@@ -299,7 +293,7 @@ let g:user_emmet_mode = 'iv'
     autocmd FileType * let g:user_emmet_settings.indentation = '               '[:&tabstop]
   augroup END
 
-"#########  MyVIMscript Test ##########
+"#########  MyVIMscript ##########
 
 function! s:InsTxtAroundSelection(type, leftText, rightText)
 	let saved_unnamed_register = @@
