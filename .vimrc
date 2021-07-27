@@ -112,6 +112,9 @@ if isdirectory(expand('~/.vim/plugged/nerdtree'))
 	nnoremap <leader>wf :NERDTree<CR>
 endif
 
+" Move around faster
+nnoremap <leader>w <C-w>w
+
 " Quickly remove highlishts
 nnoremap  <leader>cc :<C-u>nohlsearch<cr><Esc>
 
@@ -135,14 +138,14 @@ inoremap <c-f> <c-x><c-o>
 inoremap <c-d> <c-x><c-k>
 
 "Quickly move cursor in insert mode.
-if 0
-	inoremap <C-h> <left>
-	inoremap <C-j> <down>
-	inoremap <C-k> <up>
-	inoremap <C-l> <right>
-	inoremap <C-a> <home>
-	inoremap <C-e> <end>
-endif
+"if 0
+"	inoremap <C-h> <left>
+"	inoremap <C-j> <down>
+"	inoremap <C-k> <up>
+"	inoremap <C-l> <right>
+"	inoremap <C-a> <home>
+"	inoremap <C-e> <end>
+"endif
 
 " Automatically execute ctags
 "autocmd BufWritePost * call system("ctags -R")
@@ -169,7 +172,7 @@ if has("autocmd")
 	autocmd FileType c,cpp,python,java,ruby,javascript,sh hi ColorColumn ctermbg=235 guibg=#2c2d27 
 
 
-	autocmd FileType sh,markdown,text,plantuml    let maplocalleader = ";"
+	autocmd FileType c,cpp,python,java,ruby,javascript,sh,markdown,text,plantuml    let maplocalleader = ";"
 
     autocmd FileType c           setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType c           nnoremap <buffer> <C-i> <Home>i//<Esc>
@@ -178,16 +181,14 @@ if has("autocmd")
     autocmd FileType c           nnoremap <buffer> <C-e> :make run
 
     autocmd FileType cpp         setlocal sw=4 sts=4 ts=4 noexpandtab
-    autocmd FileType cpp         nnoremap <buffer> <C-i> <Home>i//<Esc>
-    autocmd FileType cpp         nnoremap <buffer> <C-f> <Home>"_x"_x<Esc>
     autocmd FileType cpp         nnoremap <buffer> <C-b> :make
     autocmd FileType cpp         nnoremap <buffer> <C-e> :make run
-    autocmd FileType cpp         inoremap <buffer> <C-f> <c-o>:r !ins_for.sh cpp
+    autocmd FileType cpp         inoremap <buffer> <C-i> <c-o>:call InsertFor("i","N")<Left><Left><Left><Left><Left><Left><Left>
 	
-    autocmd FileType python      setlocal sw=4 sts=4 ts=4 noexpandtab
+    autocmd FileType python      setlocal sw=4 sts=4 ts=4 expandtab
     autocmd FileType python      nnoremap <buffer> <C-i> <Home>i#<Esc>
     autocmd FileType python      nnoremap <buffer> <C-f> <Home>"_x<Esc>
-    autocmd FileType python      nnoremap <buffer> <C-e> :terminal python3 %
+    autocmd FileType python      nnoremap <buffer> <C-e> :terminal python4 %
 
     autocmd FileType java         setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType java         nnoremap <buffer> <C-i> <Home>i//<Esc>
@@ -234,12 +235,14 @@ if has("autocmd")
 	" Make selected text inline code
     autocmd FileType markdown,text    vnoremap <buffer> <localleader>i :<c-u>call <SID>InsTxtAroundSelection( 'inline', '`', '`')<CR>
     autocmd FileType markdown,text    nnoremap <buffer> <localleader>ui F`xf`x
-	" Make selected text color Blue
+	" Make selected text color Blue/Red
     autocmd FileType markdown,text    vnoremap <buffer> <localleader>fb :<c-u>call <SID>InsTxtAroundSelection( 'inline', '<span style="color: blue;">', '</span>')<CR>
-	" Make selected text color Red
     autocmd FileType markdown,text    vnoremap <buffer> <localleader>fr :<c-u>call <SID>InsTxtAroundSelection( 'inline', '<span style="color: red;">', '</span>')<CR>
 	" Delete color
     autocmd FileType markdown,text    nnoremap <buffer> <localleader>uf vityvatp
+	" Append CR
+    autocmd FileType markdown,text    nnoremap <buffer> <localleader>r m`A<br><ESC>``
+    autocmd FileType markdown,text    nnoremap <buffer> <localleader>ur :s/<br>$//<CR> 
 	" Make selected text Code Block
     autocmd FileType markdown,text    vnoremap <buffer> <localleader>c :<c-u>call <SID>InsTxtAroundSelection( 'block', '<pre><code class="prettyprint linenums">', '</code></pre>')<CR>
     autocmd FileType markdown,text    nnoremap <buffer> <localleader>uc vityvatpvityvatpmm`]dd`mdd
@@ -265,7 +268,10 @@ if has("autocmd")
 		autocmd FileType sh          nnoremap <buffer> <localleader>zz gg:r !cat ~/format/fmt.sh<CR>ggdd
 	endif
 	if filereadable(expand('~/format/fmt.md'))
-		autocmd FileType markdown          nnoremap <buffer> <localleader>zz gg:r !cat ~/format/fmt.md<CR>ggdd
+		autocmd FileType markdown    nnoremap <buffer> <localleader>zz gg:r !cat ~/format/fmt.md<CR>ggdd
+	endif
+	if filereadable(expand('~/format/fmt.cpp'))
+		autocmd FileType cpp         nnoremap <buffer> <localleader>zz gg:r !cat ~/format/fmt.cpp<CR>ggdd
 	endif
  
 endif
@@ -294,6 +300,12 @@ let g:user_emmet_mode = 'iv'
   augroup END
 
 "#########  MyVIMscript ##########
+function! InsertFor(itr, N)
+	let my_filetype = &filetype
+	if my_filetype ==# "cpp"
+		execute "normal! ifor(int " . a:itr . "=0; " . a:itr . "<" . a:N . "; " . a:itr . "++)"
+	endif
+endfunction
 
 function! s:InsTxtAroundSelection(type, leftText, rightText)
 	let saved_unnamed_register = @@
