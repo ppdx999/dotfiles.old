@@ -7,3 +7,5 @@ LCtrl & h::Send, {Left}
 LCtrl & j::Send, {Down}
 LCtrl & k::Send, {Up}
 LCtrl & l::Send, {Right}
+LCtrl & u::Send, {Home}
+LCtrl & m::Send, {End}
