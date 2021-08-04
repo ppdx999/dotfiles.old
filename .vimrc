@@ -360,14 +360,15 @@ function! s:FormatMarkdownTable(mode)
 		return
 	endif
 
+	" Get Selected Text and assign it into a variable
     let lineStart = getpos("'<")[1]
     let lineEnd = getpos("'>")[1]
     let lines = getline(lineStart, lineEnd)
 	let nLines = len(lines)
 
+	" Prepare a list to store the maximum length of the string in each column.
 	let cellLengths = []
 	let nCellLengths = len(split(lines[0], '|', 1)) - 1
-
 	let i = 0
 	while i < nCellLengths
 		let cellLengths = add(cellLengths, 0)
@@ -388,14 +389,15 @@ function! s:FormatMarkdownTable(mode)
 		let i += 1
 	endwhile
 
+	" Adds whitespace based on the 'cellLength' value. And write it to buffer. 
 	let i = 0
 	while i < nLines
 		let strList = split(lines[i], '|' , 1)
 		let j = 0
 		while j < nCellLengths
-			let nloop = cellLengths[j] - len(strList[j]) 
+			let nAddSpace = cellLengths[j] - len(strList[j]) 
 			let k = 0
-			while k < nloop
+			while k < nAddSpace
 				let strList[j] .= ' '
 				let k += 1
 			endwhile
