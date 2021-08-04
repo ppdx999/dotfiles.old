@@ -70,6 +70,7 @@ syntax on "構文ハイライトを有効にする
 set whichwrap=b,s,h,l,<,>,[,],~ " カーソルの左右移動で行末から次の行の行頭への移動が可能になる
 set number
 set nowrap
+set completeopt=menu
 
 
 if has("win64") || has("win32") || has("win16")
@@ -114,6 +115,10 @@ endif
 
 " Move around faster
 nnoremap <leader>w <C-w>w
+nnoremap ]b :bnext<CR>
+nnoremap [b :bprev<CR>
+nnoremap ]t :tabn<CR>
+nnoremap [t :tabp<CR>
 
 " Quickly remove highlishts
 nnoremap  <leader>cc :<C-u>nohlsearch<cr><Esc>
@@ -227,7 +232,7 @@ if has("autocmd")
 
     autocmd FileType vim         setlocal foldmethod=marker 
 
-	autocmd FileType markdown,text    setlocal spell spelllang=en_us
+	"autocmd FileType markdown,text    setlocal spell spelllang=en_us
 
 	" Make selected text Bold
     autocmd FileType markdown,text    vnoremap <buffer> <localleader>b :<c-u>call <SID>InsTxtAroundSelection( 'inline', '**' , '**')<CR>
@@ -236,8 +241,8 @@ if has("autocmd")
     autocmd FileType markdown,text    vnoremap <buffer> <localleader>i :<c-u>call <SID>InsTxtAroundSelection( 'inline', '`', '`')<CR>
     autocmd FileType markdown,text    nnoremap <buffer> <localleader>ui F`xf`x
 	" Make selected text color Blue/Red
-    autocmd FileType markdown,text    vnoremap <buffer> <localleader>fb :<c-u>call <SID>InsTxtAroundSelection( 'inline', '<span style="color: blue;">', '</span>')<CR>
-    autocmd FileType markdown,text    vnoremap <buffer> <localleader>fr :<c-u>call <SID>InsTxtAroundSelection( 'inline', '<span style="color: red;">', '</span>')<CR>
+    autocmd FileType markdown,text    vnoremap <buffer> <localleader>tb :<c-u>call <SID>InsTxtAroundSelection( 'inline', '<span style="color: blue;">', '</span>')<CR>
+    autocmd FileType markdown,text    vnoremap <buffer> <localleader>tr :<c-u>call <SID>InsTxtAroundSelection( 'inline', '<span style="color: red;">', '</span>')<CR>
 	" Delete color
     autocmd FileType markdown,text    nnoremap <buffer> <localleader>uf vityvatp
 	" Append CR
@@ -262,16 +267,20 @@ if has("autocmd")
     autocmd FileType markdown,text    nnoremap <buffer> <localleader>pwv vi(:<c-u>call <SID>OpenPlantumlUnderCursor("vsplit")<CR>
 	" Mapping for PlantUml Swap Left to Right
     autocmd FileType markdown,text,plantuml    nnoremap <buffer> <localleader>ps :s/\([^-<>:]*\)\s\s*\([ox<*\|//]*--*[ox>*\|\\]*\)\s\s*\([^-<>:]*\)\s*/\3 \2 \1 /<CR>:nohlsearch<CR>
+    autocmd FileType markdown,text,plantuml    vnoremap <buffer> <localleader>ft :<c-u>call <SID>FormatMarkdownTable(visualmode())<CR>
 
 	" Write format
 	if filereadable(expand('~/format/fmt.sh'))
-		autocmd FileType sh          nnoremap <buffer> <localleader>zz gg:r !cat ~/format/fmt.sh<CR>ggdd
+		autocmd FileType sh          nnoremap <buffer> <localleader>zz :r !cat ~/format/fmt.sh<CR>
 	endif
 	if filereadable(expand('~/format/fmt.md'))
-		autocmd FileType markdown    nnoremap <buffer> <localleader>zz gg:r !cat ~/format/fmt.md<CR>ggdd
+		autocmd FileType markdown    nnoremap <buffer> <localleader>zz :r !cat ~/format/fmt.md<CR>
 	endif
 	if filereadable(expand('~/format/fmt.cpp'))
-		autocmd FileType cpp         nnoremap <buffer> <localleader>zz gg:r !cat ~/format/fmt.cpp<CR>ggdd
+		autocmd FileType cpp         nnoremap <buffer> <localleader>zz :r !cat ~/format/fmt.cpp<CR>
+	endif
+	if filereadable(expand('~/format/fmt.pu'))
+		autocmd FileType plantuml         nnoremap <buffer> <localleader>zz :r !cat ~/format/fmt.pu<CR>
 	endif
  
 endif
@@ -343,4 +352,70 @@ function! s:MarkdownFormatList()
 	execute "normal! :s/^\\t\\([^-+\\s\\t]\\)/\\t+ \\1/\<CR>"
 	normal! `<v`>
 	execute "normal! :s/^\\([^-**\\s\\t]\\)/* \\1/\<CR>"
+endfunction
+
+function! s:FormatMarkdownTable(mode)
+	if a:mode !=# 'V'
+		echo 'This function should be called in V mode'
+		return
+	endif
+
+    let lineStart = getpos("'<")[1]
+    let lineEnd = getpos("'>")[1]
+    let lines = getline(lineStart, lineEnd)
+	let nLines = len(lines)
+
+	let cellLengths = []
+	let nCellLengths = len(split(lines[0], '|', 1)) - 1
+
+	let i = 0
+	while i < nCellLengths
+		let cellLengths = add(cellLengths, 0)
+		let i += 1
+	endwhile
+
+	let i = 0
+	while i < nLines
+		let strList = split(lines[i], '|' , 1)
+		let j = 0
+		while j < nCellLengths
+			let nStr = len(strList[j])
+			if nStr > cellLengths[j]
+				let cellLengths[j] = nStr
+			endif
+			let j += 1
+		endwhile
+		let i += 1
+	endwhile
+
+	let i = 0
+	while i < nLines
+		let strList = split(lines[i], '|' , 1)
+		let j = 0
+		while j < nCellLengths
+			let nloop = cellLengths[j] - len(strList[j]) 
+			let k = 0
+			while k < nloop
+				let strList[j] .= ' '
+				let k += 1
+			endwhile
+			let j += 1
+		endwhile
+		let lines[i] = join(strList,'|')
+		call setline(lineStart + i, lines[i])
+		let i += 1
+	endwhile
+endfunction
+
+function! s:get_visual_selection()
+    let [line_start, column_start] = getpos("'<")[1:2]
+    let [line_end, column_end] = getpos("'>")[1:2]
+    let lines = getline(line_start, line_end)
+    if len(lines) == 0
+        return ''
+    endif
+    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][column_start - 1:]
+    "return join(lines, "\n")
+	return lines
 endfunction
