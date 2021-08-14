@@ -84,7 +84,7 @@ elseif substitute(system("expr substr $(uname -s) 1 5"), "\n", "", "") ==# 'Linu
 endif
 
 
-"クリップボードからのペースト時の自動インデントのズレを調整する
+" Align auto indent when paste from clipborad
 if &term =~ "xterm"
     let &t_SI .= "\e[?2004h"
     let &t_EI .= "\e[?2004l"
@@ -179,6 +179,14 @@ if has("autocmd")
 
 	autocmd FileType c,cpp,python,java,ruby,javascript,sh,markdown,text,plantuml    let maplocalleader = ";"
 
+	" Align
+	autocmd FileType c,cpp,python,java,ruby,javascript,sh,markdown,text,plantuml    vnoremap <buffer> <localleader>al\| :<c-u>call <SID>AlignBy(visualmode(), '\|')<CR>
+    autocmd FileType c,cpp,python,java,ruby,javascript,sh,markdown,text,plantuml    vnoremap <buffer> <localleader>al& :<c-u>call <SID>AlignBy(visualmode(), '&')<CR>
+    autocmd FileType c,cpp,python,java,ruby,javascript,sh,markdown,text,plantuml    vnoremap <buffer> <localleader>al= :<c-u>call <SID>AlignBy(visualmode(), '=')<CR>
+    autocmd FileType c,cpp,python,java,ruby,javascript,sh,markdown,text,plantuml    vnoremap <buffer> <localleader>al: :<c-u>call <SID>AlignBy(visualmode(), ':')<CR>
+    autocmd FileType c,cpp,python,java,ruby,javascript,sh,markdown,text,plantuml    vnoremap <buffer> <localleader>al<Space> :<c-u>call <SID>AlignBy(visualmode(), ' ')<CR>
+    autocmd FileType c,cpp,python,java,ruby,javascript,sh,markdown,text,plantuml    vnoremap <buffer> <localleader>al<Tab> :<c-u>call <SID>AlignBy(visualmode(), '\t')<CR>
+
     autocmd FileType c           setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType c           nnoremap <buffer> <C-i> <Home>i//<Esc>
     autocmd FileType c           nnoremap <buffer> <C-f> <Home>"_x"_x<Esc>
@@ -267,7 +275,6 @@ if has("autocmd")
     autocmd FileType markdown,text    nnoremap <buffer> <localleader>pwv vi(:<c-u>call <SID>OpenPlantumlUnderCursor("vsplit")<CR>
 	" Mapping for PlantUml Swap Left to Right
     autocmd FileType markdown,text,plantuml    nnoremap <buffer> <localleader>ps :s/\([^-<>:]*\)\s\s*\([ox<*\|//]*--*[ox>*\|\\]*\)\s\s*\([^-<>:]*\)\s*/\3 \2 \1 /<CR>:nohlsearch<CR>
-    autocmd FileType markdown,text,plantuml    vnoremap <buffer> <localleader>ft :<c-u>call <SID>FormatMarkdownTable(visualmode())<CR>
 
 	" Write format
 	if filereadable(expand('~/format/fmt.sh'))
@@ -354,7 +361,7 @@ function! s:MarkdownFormatList()
 	execute "normal! :s/^\\([^-**\\s\\t]\\)/* \\1/\<CR>"
 endfunction
 
-function! s:FormatMarkdownTable(mode)
+function! s:AlignBy(mode, char)
 	if a:mode !=# 'V'
 		echo 'This function should be called in V mode'
 		return
@@ -368,7 +375,7 @@ function! s:FormatMarkdownTable(mode)
 
 	" Prepare a list to store the maximum length of the string in each column.
 	let cellLengths = []
-	let nCellLengths = len(split(lines[0], '|', 1)) - 1
+	let nCellLengths = len(split(lines[0], a:char, 1)) - 1
 	let i = 0
 	while i < nCellLengths
 		let cellLengths = add(cellLengths, 0)
@@ -377,7 +384,7 @@ function! s:FormatMarkdownTable(mode)
 
 	let i = 0
 	while i < nLines
-		let strList = split(lines[i], '|' , 1)
+		let strList = split(lines[i], a:char , 1)
 		let j = 0
 		while j < nCellLengths
 			let nStr = len(strList[j])
@@ -392,7 +399,7 @@ function! s:FormatMarkdownTable(mode)
 	" Adds whitespace based on the 'cellLength' value. And write it to buffer. 
 	let i = 0
 	while i < nLines
-		let strList = split(lines[i], '|' , 1)
+		let strList = split(lines[i], a:char , 1)
 		let j = 0
 		while j < nCellLengths
 			let nAddSpace = cellLengths[j] - len(strList[j]) 
@@ -403,7 +410,7 @@ function! s:FormatMarkdownTable(mode)
 			endwhile
 			let j += 1
 		endwhile
-		let lines[i] = join(strList,'|')
+		let lines[i] = join(strList, a:char)
 		call setline(lineStart + i, lines[i])
 		let i += 1
 	endwhile
