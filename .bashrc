@@ -129,6 +129,7 @@ export LC_ALL=C
 
 case "$(uname -s)" in
   Linux* )
+    :
     ;;
   MINGW* | CYGWIN* )
     export MSYS=winsymlinks:nativestrict
