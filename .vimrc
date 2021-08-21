@@ -42,10 +42,10 @@ set textwidth=0 " Disable automatic line break feature.
 " Settings about Chracter
 set encoding=utf-8
 scriptencoding utf-8
-set fileencoding=utf-8 " 保存時の文字コード
-set fileencodings=ucs-boms,utf-8,euc-jp,cp932 " 読み込み時の文字コードの自動判別. 左側が優先される
-set fileformats=unix,dos,mac " 改行コードの自動判別. 左側が優先される
-set ambiwidth=double " □や○文字が崩れる問題を解決
+set fileencoding=utf-8
+set fileencodings=ucs-boms,utf-8,euc-jp,cp932
+set fileformats=unix,dos,mac " newline character
+set ambiwidth=double " To display □ and ○ correctly
 
 " Setting about tab
 "set expandtab " タブ入力を複数の空白入力に置き換える
@@ -137,11 +137,6 @@ nnoremap <leader>u( vi(yva(p
 nnoremap <leader>u' vi'yva'p
 nnoremap <leader>u" vi"yva"p
 
-
-" Easy to trigger Completion
-inoremap <c-f> <c-x><c-o>
-inoremap <c-d> <c-x><c-k>
-
 " Align
 vnoremap <leader>=\| :<c-u>call <SID>AlignBy(visualmode(), '\|')<CR>
 vnoremap <leader>=& :<c-u>call <SID>AlignBy(visualmode(), '&')<CR>
@@ -154,16 +149,12 @@ vnoremap <leader>=) :<c-u>call <SID>AlignBy(visualmode(), ')')<CR>
 vnoremap <leader>=<Space> :<c-u>call <SID>AlignBy(visualmode(), ' ')<CR>
 vnoremap <leader>=<Tab> :<c-u>call <SID>AlignBy(visualmode(), '\t')<CR>
 
+" Quickly move cursor in insert mode.
+inoremap <C-b> <left>
+inoremap <C-f> <right>
 
-"Quickly move cursor in insert mode.
-"if 0
-"	inoremap <C-h> <left>
-"	inoremap <C-j> <down>
-"	inoremap <C-k> <up>
-"	inoremap <C-l> <right>
-"	inoremap <C-u> <home>
-"	inoremap <C-m> <end>
-"endif
+" Easily add date 
+inoremap <C-y> <C-r>=strftime("%Y/%m/%d")<CR>
 
 " Automatically execute ctags
 "autocmd BufWritePost * call system("ctags -R")
