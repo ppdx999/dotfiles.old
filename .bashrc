@@ -117,33 +117,31 @@ if ! shopt -oq posix; then
 fi
 
 # My Settings
+export PS1='\[\e[1;32m\]\u\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]:$\[\e[0m\] '
+alias ls='ls --color=auto -F'
+PATH="$PATH:$HOME/bin"
+PATH="$PATH:$HOME/.local/bin"
+HISTSIZE=20000
+HISTFILESIZE=20000
+if [ -d $HOME/shellshoccar/bin ]           ; then PATH="$PATH:/home/ppdx999/shellshoccar/bin"   ; fi
+if [ -d $HOME/.local/lib/shellshoccar/bin ]; then PATH="$PATH:$HOME/.local/lib/shellshoccar/bin"; fi
+export LC_ALL=C
 
-# Linux
-if [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
-	export PS1='\[\e[1;32m\]\u\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]:$\[\e[0m\] '
-	alias ls='ls --color=auto -F'
-	PATH="$PATH:$HOME/bin"
-	PATH="$HOME/.local/bin:$PATH"
-	HISTSIZE=20000
-	HISTFILESIZE=20000
-# Windows
-elif [ "$(expr substr $(uname -s) 1 10)" == 'MINGW64_NT' ]; then
-	export PS1='\[\e[1;32m\]\u\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]:$\[\e[0m\] '
-	alias ls='ls --color=auto -F'
-	PATH="$PATH:$HOME/bin"
-	PATH="$HOME/.local/bin:$PATH"
-	HISTSIZE=20000
-	HISTFILESIZE=20000
-	export MSYS=winsymlinks:nativestrict
-	# Set env for Japanese
-	export LC_ALL=ja_JP.utf8
-	export LANG=ja_JP.utf8
-	export LANGUAGE=ja_JP.utf8
-	export LC_CTYPE="ja_JP.utf8"
-	export LC_NUMERIC="ja_JP.utf8"
-	export LC_TIME="ja_JP.utf8"
-	export LC_COLLATE="ja_JP.utf8"
-	export LC_MONETARY="ja_JP.utf8"
-	export LC_MESSAGES="ja_JP.utf8"
-	if [ -f ~/lib/ctags/ctags.exe ]; then PATH="$PATH:$HOME/lib/ctags" ; fi
-fi
+case "$(uname -s)" in
+  Linux* )
+    ;;
+  MINGW* | CYGWIN* )
+    export MSYS=winsymlinks:nativestrict
+    # Set env for Japanese
+    export LC_ALL=ja_JP.utf8
+    export LANG=ja_JP.utf8
+    export LANGUAGE=ja_JP.utf8
+    export LC_CTYPE="ja_JP.utf8"
+    export LC_NUMERIC="ja_JP.utf8"
+    export LC_TIME="ja_JP.utf8"
+    export LC_COLLATE="ja_JP.utf8"
+    export LC_MONETARY="ja_JP.utf8"
+    export LC_MESSAGES="ja_JP.utf8"
+    if [ -f $HOME/.local/lib/ctags/ctags.exe ]; then PATH="$PATH:$HOME/.local/lib/ctags" ; fi
+    ;;
+esac

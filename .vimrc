@@ -142,14 +142,27 @@ nnoremap <leader>u" vi"yva"p
 inoremap <c-f> <c-x><c-o>
 inoremap <c-d> <c-x><c-k>
 
+" Align
+vnoremap <leader>=\| :<c-u>call <SID>AlignBy(visualmode(), '\|')<CR>
+vnoremap <leader>=& :<c-u>call <SID>AlignBy(visualmode(), '&')<CR>
+vnoremap <leader>=, :<c-u>call <SID>AlignBy(visualmode(), ',')<CR>
+vnoremap <leader>=# :<c-u>call <SID>AlignBy(visualmode(), '#')<CR>
+vnoremap <leader>== :<c-u>call <SID>AlignBy(visualmode(), '=')<CR>
+vnoremap <leader>=: :<c-u>call <SID>AlignBy(visualmode(), ':')<CR>
+vnoremap <leader>=; :<c-u>call <SID>AlignBy(visualmode(), ';')<CR>
+vnoremap <leader>=) :<c-u>call <SID>AlignBy(visualmode(), ')')<CR>
+vnoremap <leader>=<Space> :<c-u>call <SID>AlignBy(visualmode(), ' ')<CR>
+vnoremap <leader>=<Tab> :<c-u>call <SID>AlignBy(visualmode(), '\t')<CR>
+
+
 "Quickly move cursor in insert mode.
 "if 0
 "	inoremap <C-h> <left>
 "	inoremap <C-j> <down>
 "	inoremap <C-k> <up>
 "	inoremap <C-l> <right>
-"	inoremap <C-a> <home>
-"	inoremap <C-e> <end>
+"	inoremap <C-u> <home>
+"	inoremap <C-m> <end>
 "endif
 
 " Automatically execute ctags
@@ -179,13 +192,6 @@ if has("autocmd")
 
 	autocmd FileType c,cpp,python,java,ruby,javascript,sh,markdown,text,plantuml    let maplocalleader = ";"
 
-	" Align
-	autocmd FileType c,cpp,python,java,ruby,javascript,sh,markdown,text,plantuml    vnoremap <buffer> <localleader>al\| :<c-u>call <SID>AlignBy(visualmode(), '\|')<CR>
-    autocmd FileType c,cpp,python,java,ruby,javascript,sh,markdown,text,plantuml    vnoremap <buffer> <localleader>al& :<c-u>call <SID>AlignBy(visualmode(), '&')<CR>
-    autocmd FileType c,cpp,python,java,ruby,javascript,sh,markdown,text,plantuml    vnoremap <buffer> <localleader>al= :<c-u>call <SID>AlignBy(visualmode(), '=')<CR>
-    autocmd FileType c,cpp,python,java,ruby,javascript,sh,markdown,text,plantuml    vnoremap <buffer> <localleader>al: :<c-u>call <SID>AlignBy(visualmode(), ':')<CR>
-    autocmd FileType c,cpp,python,java,ruby,javascript,sh,markdown,text,plantuml    vnoremap <buffer> <localleader>al<Space> :<c-u>call <SID>AlignBy(visualmode(), ' ')<CR>
-    autocmd FileType c,cpp,python,java,ruby,javascript,sh,markdown,text,plantuml    vnoremap <buffer> <localleader>al<Tab> :<c-u>call <SID>AlignBy(visualmode(), '\t')<CR>
 
     autocmd FileType c           setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType c           nnoremap <buffer> <C-i> <Home>i//<Esc>
@@ -220,8 +226,6 @@ if has("autocmd")
     autocmd FileType javasctipt  nnoremap <buffer> <C-i> <Home>i//<Esc>
     autocmd FileType javasctipt  nnoremap <buffer> <C-f> <Home>xx<Esc>
 
-    autocmd FileType zsh         setlocal sw=4 sts=4 ts=4 noexpandtab
-
     autocmd FileType scala       setlocal sw=4 sts=4 ts=4 noexpandtab
 
     autocmd FileType json        setlocal sw=4 sts=4 ts=4 noexpandtab
@@ -234,9 +238,10 @@ if has("autocmd")
     autocmd FileType scss        setlocal sw=4 sts=4 ts=4 noexpandtab
     autocmd FileType sass        setlocal sw=4 sts=4 ts=4 noexpandtab
 
-    autocmd FileType sh          nnoremap <buffer> <C-i> <Home>i#<Esc>
-    autocmd FileType sh          nnoremap <buffer> <C-f> <Home>x<Esc>
-    autocmd FileType sh          setlocal sw=2 sts=2 ts=2 noexpandtab
+    autocmd FileType sh          setlocal sw=2 sts=2 ts=2 expandtab
+    autocmd FileType sh          nnoremap <buffer> <localleader>= :<c-u>call <SID>shFormamt('n')<CR>
+    autocmd FileType sh          vnoremap <buffer> <localleader>= :<c-u>call <SID>shFormamt(visualmode())<CR>
+    autocmd FileType zsh         setlocal sw=4 sts=4 ts=4 expandtab
 
     autocmd FileType vim         setlocal foldmethod=marker 
 
@@ -361,6 +366,19 @@ function! s:MarkdownFormatList()
 	execute "normal! :s/^\\([^-**\\s\\t]\\)/* \\1/\<CR>"
 endfunction
 
+" 日本語は2バイトとしてカウントする。
+function! s:strlenX(text)
+	let total_byte = strlen(a:text)
+	let n_total = strlen(substitute(a:text, '.', 'x','g'))
+	if (total_byte == n_total)
+		return n_total
+	else
+		let n_multi_byte = (total_byte - n_total) / 2
+		let n_single_byte = total_byte - (n_multi_byte * 3)
+		return n_single_byte + (n_multi_byte * 2)
+	endif
+endfunction
+
 function! s:AlignBy(mode, char)
 	if a:mode !=# 'V'
 		echo 'This function should be called in V mode'
@@ -375,7 +393,19 @@ function! s:AlignBy(mode, char)
 
 	" Prepare a list to store the maximum length of the string in each column.
 	let cellLengths = []
-	let nCellLengths = len(split(lines[0], a:char, 1)) - 1
+	let nCellLengths = 0
+	let i = 0
+	while i < nLines
+		if matchstr(lines[i], a:char) ==# ""
+			let i += 1
+			continue
+		endif
+		let thisCellLength = len(split(lines[i], a:char, 1))
+		if thisCellLength > nCellLengths
+			let nCellLengths = thisCellLength
+		endif
+		let i += 1
+	endwhile
 	let i = 0
 	while i < nCellLengths
 		let cellLengths = add(cellLengths, 0)
@@ -384,10 +414,15 @@ function! s:AlignBy(mode, char)
 
 	let i = 0
 	while i < nLines
+		if matchstr(lines[i], a:char) ==# ""
+			let i += 1
+			continue
+		endif
 		let strList = split(lines[i], a:char , 1)
+		let nStrList = len(split(lines[i], a:char , 1)) 
 		let j = 0
-		while j < nCellLengths
-			let nStr = len(strList[j])
+		while j < nStrList
+			let nStr = s:strlenX(strList[j])
 			if nStr > cellLengths[j]
 				let cellLengths[j] = nStr
 			endif
@@ -399,10 +434,15 @@ function! s:AlignBy(mode, char)
 	" Adds whitespace based on the 'cellLength' value. And write it to buffer. 
 	let i = 0
 	while i < nLines
+		if matchstr(lines[i], a:char) ==# ""
+			let i += 1
+			continue
+		endif
 		let strList = split(lines[i], a:char , 1)
+		let nStrList = len(split(lines[i], a:char , 1)) 
 		let j = 0
-		while j < nCellLengths
-			let nAddSpace = cellLengths[j] - len(strList[j]) 
+		while j < nStrList
+			let nAddSpace = cellLengths[j] - s:strlenX(strList[j]) 
 			let k = 0
 			while k < nAddSpace
 				let strList[j] .= ' '
@@ -411,7 +451,94 @@ function! s:AlignBy(mode, char)
 			let j += 1
 		endwhile
 		let lines[i] = join(strList, a:char)
+		let lines[i] = substitute(lines[i], '\\t', '\t', 'g')
 		call setline(lineStart + i, lines[i])
+		let i += 1
+	endwhile
+endfunction
+
+
+function! s:shFormamt(mode)
+	" Decide format range
+	if a:mode ==? 'V'
+		let lineStart = getpos("'<")[1]
+		let lineEnd = getpos("'>")[1]
+	else
+		let lineStart = 1 
+		let lineEnd = line('$') 
+	endif
+	let lines = getline(lineStart, lineEnd)
+	let nLines = len(lines)
+
+
+	" Process line by line
+	let i = 0
+	while i < nLines
+
+		" Skip here document
+		if(matchstr(lines[i],'\S') !=# '#' && matchstr(lines[i],'<<-\?') !=# '')
+			let EOF = matchstr(lines[i], '<<-\?\s*\zs\S\S*\ze\s*')	
+			while i < nLines
+				let i += 1
+				if matchstr(lines[i], '^' . EOF . '\s*$') !=# ''
+					let i += 1
+					break
+				endif
+			endwhile
+		endif
+
+		" Skip blank line
+		if(lines[i] == '')
+			let i += 1
+			continue
+		endif
+
+		let n_width = 69
+
+		" Comment
+		if(matchstr(lines[i],'\S') ==# '#' && (lines[i] =~# '[-=]\s*$' || lines[i] =~# '#####\s*$'))
+			let line = substitute(lines[i], '\s*$', '', 'g')
+			let lineLen = s:strlenX(line)
+			let fillChar = line[-1:]
+			if lineLen > n_width
+				call setline(lineStart + i, line[0:n_width])
+			else
+				let j = lineLen
+				let newLine = line 
+				while j <= n_width
+					let newLine .= fillChar 
+					let j += 1
+				endwhile
+				call setline(lineStart + i, newLine)
+			endif
+		" Not comment 
+		elseif(matchstr(lines[i],'\S') !=# '#')
+			let n_width -= 1
+			let line = substitute(lines[i], '\s*$', '', 'g')
+			let lastChar = line[-1:]
+			if lastChar =~# '[|\#]'
+				let line = substitute(line, '\s*[|\#]$', '', 'g')
+			elseif lastChar ==# '&'
+				let line = substitute(line, '\s*&&$', '', 'g')
+				let lastChar = '&&'
+				let n_width -= 1 
+			else
+				let lastChar = '#'
+			endif
+			let lineLen = s:strlenX(line)
+			if lineLen > n_width
+				let i += 1
+				continue
+			endif
+			let j = lineLen
+			let newLine = line 
+			while j <= n_width
+				let newLine .= ' ' 
+				let j += 1
+			endwhile
+			let newLine .= lastChar
+			call setline(lineStart + i, newLine)
+		endif
 		let i += 1
 	endwhile
 endfunction
