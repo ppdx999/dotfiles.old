@@ -1,0 +1,48 @@
+" import file
+source ~/.vim/_config/init/myUtil.vim
+
+" map leader
+let mapleader = ","
+let maplocalleader = ";"
+
+" completion of parentheses
+inoremap {<Enter> {}<Left><CR><ESC><S-o>
+"inoremap ( ()<Left>
+"inoremap [ []<Left>
+
+if isdirectory(expand('~/.vim/plugged/nerdtree'))
+	" Quickly Open NERDTree
+	nnoremap <leader>f :NERDTree<CR>
+endif
+
+" Move around faster
+nnoremap <leader>w <C-w>w<CR>
+nnoremap ]b :bnext<CR>
+nnoremap [b :bprev<CR>
+nnoremap ]t :tabn<CR>
+nnoremap [t :tabp<CR>
+
+" Quickly remove highlishts
+nnoremap  <leader>cc :<C-u>nohlsearch<cr><Esc>
+
+" Quickly Open ~/.vimrc
+nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+
+" Quickly Reload ~/.vimrc
+nnoremap <leader>sv :source $MYVIMRC<CR>
+
+" Surround selected text with ( ,' or " and cancel it.
+vnoremap s( :<c-u>call myUtil#insTxtAroundSelection( '(', ')')<CR>
+vnoremap s' :<c-u>call myUtil#insTxtAroundSelection( "'", "'")<CR>
+vnoremap s" :<c-u>call myUtil#insTxtAroundSelection( '"', '"')<CR>
+nnoremap <leader>u( vi(yva(p
+nnoremap <leader>u' vi'yva'p
+nnoremap <leader>u" vi"yva"p
+
+" Quickly move cursor in insert mode.
+inoremap <C-b> <left>
+inoremap <C-f> <right>
+
+" Easily add date 
+inoremap <C-s> <C-r>=myUtil#En2JpDate(strftime("%Y/%m/%d (%a)"))<CR>
+nnoremap <C-s> :call myUtil#insertTextAtCurrentCursor(myUtil#En2JpDate(strftime("%Y/%m/%d (%a)")))<CR>
