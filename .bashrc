@@ -125,11 +125,12 @@ HISTSIZE=20000
 HISTFILESIZE=20000
 if [ -d $HOME/shellshoccar/bin ]           ; then PATH="$PATH:/home/ppdx999/shellshoccar/bin"   ; fi
 if [ -d $HOME/.local/lib/shellshoccar/bin ]; then PATH="$PATH:$HOME/.local/lib/shellshoccar/bin"; fi
-export LC_ALL=C
+#export LC_ALL=C
 
 case "$(uname -s)" in
   Linux* )
-    :
+    stty -ixon # disable Ctrl-s freez
+    alias notion='google-chrome https://www.notion.so/login'
     ;;
   MINGW* | CYGWIN* )
     export MSYS=winsymlinks:nativestrict
@@ -146,3 +147,7 @@ case "$(uname -s)" in
     if [ -f $HOME/.local/lib/ctags/ctags.exe ]; then PATH="$PATH:$HOME/.local/lib/ctags" ; fi
     ;;
 esac
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
