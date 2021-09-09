@@ -46,3 +46,25 @@ inoremap <C-f> <right>
 " Easily add date 
 inoremap <C-s> <C-r>=myUtil#En2JpDate(strftime("%Y/%m/%d (%a)"))<CR>
 nnoremap <C-s> :call myUtil#insertTextAtCurrentCursor(myUtil#En2JpDate(strftime("%Y/%m/%d (%a)")))<CR>
+
+" Copy clipboard in Cygwin
+if has('win32unix')
+	function! s:Putclip(type, ...) range
+	  let sel_save = &selection
+	  let &selection = "inclusive"
+	  let reg_save = @@
+	  if a:type == 'n'
+		silent exe a:firstline . "," . a:lastline . "y"
+	  elseif a:type == 'c'
+		silent exe a:1 . "," . a:2 . "y"
+	  else
+		silent exe "normal! `<" . a:type . "`>y"
+	  endif
+	  call writefile(split(@@,"\n"), '/dev/clipboard')
+	  let &selection = sel_save
+	  let @@ = reg_save
+	endfunction
+
+	vnoremap <silent> <leader>y :call <SID>Putclip(visualmode(), 1)<CR>
+	nnoremap <silent> <leader>y :call <SID>Putclip('n', 1)<CR>
+endif
