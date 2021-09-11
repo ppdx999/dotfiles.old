@@ -123,7 +123,6 @@ PATH="$PATH:$HOME/bin"
 PATH="$PATH:$HOME/.local/bin"
 HISTSIZE=20000
 HISTFILESIZE=20000
-if [ -d $HOME/shellshoccar/bin ]           ; then PATH="$PATH:/home/ppdx999/shellshoccar/bin"   ; fi
 if [ -d $HOME/.local/lib/shellshoccar/bin ]; then PATH="$PATH:$HOME/.local/lib/shellshoccar/bin"; fi
 #export LC_ALL=C
 
@@ -146,6 +145,9 @@ case "$(uname -s)" in
     export LC_MESSAGES="ja_JP.utf8"
     if [ -f $HOME/.local/lib/ctags/ctags.exe ]; then PATH="$PATH:$HOME/.local/lib/ctags" ; fi
     ;;
+  MSYS* )
+    export HOMEX='/c/Users/$USERNAME'
+    alias cdh='cd /c/Users/$USERNAME'
 esac
 
 export NVM_DIR="$HOME/.nvm"

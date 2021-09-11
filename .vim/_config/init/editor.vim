@@ -52,6 +52,12 @@ set number
 set nowrap
 set completeopt=menu
 
+" Setting for enable backspace in MSYS
+if has('win32unix')
+	set nocompatible
+	set backspace=2
+endif
+
 
 " Clipboard setting
 if has("win64") || has("win32") || has("win16")
