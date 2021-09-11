@@ -107,6 +107,10 @@ function! myUtil#insertTextAtCurrentCursor(text)
     call cursor(lineNum, colNum + strlen(a:text))
 endfunction
 
+function! myUtil#substrX(text, s, e)
+	return join(split(a:text, '\zs')[a:s:a:e], '')
+endfunction
+
 function! myUtil#insTxtAroundSelection(leftText, rightText)
 
     let [lineStart, columnStart] = getpos("'<")[1:2]
@@ -115,6 +119,7 @@ function! myUtil#insTxtAroundSelection(leftText, rightText)
 	if lineStart ==# lineEnd
 		let line = getline(lineStart)
 		let newLine = (columnStart==#1 ? '' : line[0:columnStart-2]) . a:leftText . line[columnStart-1:columnEnd-(&selection == 'inclusive' ? 1 : 2)] . a:rightText . line[columnEnd-(&selection == 'inclusive' ? 0 : 1):]
+		"let newLine = (columnStart==#1 ? '' : myUtil#substrX(line, 0, columnStart-2) ) . a:leftText . myUtil#substrX(line, columnStart-1, columnEnd-(&selection == 'inclusive' ? 1 : 2)) . a:rightText . myUtil#substrX(line, columnEnd-(&selection == 'inclusive' ? 0 : 1), '')
 		call setline(lineStart, newLine)
 	else
 		call append(lineStart-1, a:leftText)
