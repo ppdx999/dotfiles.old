@@ -56,6 +56,7 @@ set completeopt=menu
 if has('win32unix')
 	set nocompatible
 	set backspace=2
+	set clipboard=unnamed
 endif
 
 
