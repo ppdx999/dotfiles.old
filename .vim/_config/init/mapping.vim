@@ -7,8 +7,13 @@ let maplocalleader = ";"
 
 " completion of parentheses
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
-"inoremap ( ()<Left>
-"inoremap [ []<Left>
+inoremap (<Enter> ()<Left><CR><ESC><S-o>
+inoremap [<Enter> []<Left><CR><ESC><S-o>
+inoremap { {}<Left>
+inoremap ( ()<Left>
+inoremap [ []<Left>
+inoremap " ""<Left>
+
 
 if isdirectory(expand('~/.vim/plugged/nerdtree'))
 	" Quickly Open NERDTree

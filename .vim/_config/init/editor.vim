@@ -23,8 +23,8 @@ set textwidth=0 " Disable automatic line break feature.
 set encoding=utf-8
 scriptencoding utf-8
 set fileencoding=utf-8
-set fileencodings=ucs-boms,utf-8,euc-jp,cp932
 set fileformats=unix,dos,mac " newline character
+set fileencodings=utf-8,sjis,ucs-boms,euc-jp,cp932
 set ambiwidth=double " To display □ and ○ correctly
 
 " Setting about tab
@@ -93,9 +93,10 @@ if has("autocmd") && exists("+omnifunc")
           \	endif
 endif
 
-" 本当は、c.vim python.vim　みたいにファイルを作成してその中のそれぞれにこれを書きたい。
-if has("autocmd")
-	" Change the background color of columns 80 and beyond.
-	autocmd FileType c,cpp,python,java,ruby,javascript,sh let &colorcolumn=join(range(81,999),",")
-	autocmd FileType c,cpp,python,java,ruby,javascript,sh hi ColorColumn ctermbg=235 guibg=#2c2d27 
+"ctags
+if executable('ctags')
+	set tags=.tags;$HOME
+	augroup ctags
+		autocmd!
+		autocmd bufwritepost * call myUtil#execute_ctags()
 endif

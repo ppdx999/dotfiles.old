@@ -7,6 +7,8 @@ autocmd BufNewFile,BufRead *.md	set filetype=markdown
 autocmd BufNewFile,BufRead *.txt set filetype=text
 autocmd BufRead,BufNewFile * if !did_filetype() && getline(1) =~# '@startuml\>'| setfiletype plantuml | endif
 autocmd BufRead,BufNewFile *.pu,*.uml,*.plantuml,*.puml,*.iuml set filetype=plantuml
+autocmd BufRead,BufNewFile *.tsx set filetype=typescript
+autocmd BufRead,BufNewFile *.jsx set filetype=javascript
 
 "#########  Read specific file  ##########
 
