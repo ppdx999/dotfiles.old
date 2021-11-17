@@ -48,12 +48,17 @@ nnoremap <leadrer>a; A;<ESC>
 nnoremap gb :vertical wincmd f<CR>
 
 " Quickly move cursor in insert mode.
-inoremap <C-b> <left>
-inoremap <C-f> <right>
+inoremap <C-a> <left>
+inoremap <C-s> <down>
+inoremap <C-d> <right>
+inoremap <C-w> <up>
+inoremap <C-q> <home>
+inoremap <C-e> <end>
+
 
 " Easily add date 
-inoremap <C-s> <C-r>=myUtil#En2JpDate(strftime("%Y/%m/%d (%a)"))<CR>
-nnoremap <C-s> :call myUtil#insertTextAtCurrentCursor(myUtil#En2JpDate(strftime("%Y/%m/%d (%a)")))<CR>
+" inoremap <C-s> <C-r>=myUtil#En2JpDate(strftime("%Y/%m/%d (%a)"))<CR>
+" nnoremap <C-s> :call myUtil#insertTextAtCurrentCursor(myUtil#En2JpDate(strftime("%Y/%m/%d (%a)")))<CR>
 
 " Copy clipboard in Cygwin
 if has('win32unix')
