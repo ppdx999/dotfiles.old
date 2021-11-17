@@ -9,10 +9,6 @@ let maplocalleader = ";"
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
 inoremap [<Enter> []<Left><CR><ESC><S-o>
-inoremap { {}<Left>
-inoremap ( ()<Left>
-inoremap [ []<Left>
-inoremap " ""<Left>
 
 
 if isdirectory(expand('~/.vim/plugged/nerdtree'))
@@ -43,6 +39,13 @@ vnoremap s" :<c-u>call myUtil#insTxtAroundSelection( '"', '"')<CR>
 nnoremap <leader>u( vi(yva(p
 nnoremap <leader>u' vi'yva'p
 nnoremap <leader>u" vi"yva"p
+
+" Append a char.
+nnoremap <leadrer>a, A,<ESC>
+nnoremap <leadrer>a; A;<ESC>
+
+" Quickly open a file under cursor as vsplit
+nnoremap gb :vertical wincmd f<CR>
 
 " Quickly move cursor in insert mode.
 inoremap <C-b> <left>
