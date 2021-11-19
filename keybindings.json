@@ -1,4 +1,11 @@
-// Place your key bindings in this file to override the defaults
+// Alt+h = left
+// Alt+j = down
+// Alt+k = up
+// Alt+l = right
+// Alt+u = home
+// Alt+m = end
+// Alt+w = next-word
+// Alt+b = prev-word
 [
     {
         "key": "alt+j",
@@ -74,22 +81,22 @@
     },
     {
         "key": "alt+u",
-        "command": "cursorPageUp",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "alt+n",
-        "command": "cursorPageDown",
+        "command": "cursorHome",
         "when": "editorTextFocus"
     },
     {
         "key": "alt+shift+u",
-        "command": "cursorPageUpSelect",
+        "command": "cursorHomeSelect",
         "when": "editorTextFocus"
     },
     {
-        "key": "alt+shift+n",
-        "command": "cursorPageDownSelect",
+        "key": "alt+m",
+        "command": "cursorEnd",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+shift+m",
+        "command": "cursorEndSelect",
         "when": "editorTextFocus"
     },
     {
