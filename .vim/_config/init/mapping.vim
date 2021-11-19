@@ -9,6 +9,7 @@ let maplocalleader = ";"
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
 inoremap [<Enter> []<Left><CR><ESC><S-o>
+inoremap ({<Enter> ({})<Left><Left><CR><ESC><S-o>
 
 
 if isdirectory(expand('~/.vim/plugged/nerdtree'))
@@ -27,7 +28,8 @@ nnoremap [t :tabp<CR>
 nnoremap  <leader>cc :<C-u>nohlsearch<cr><Esc>
 
 " Quickly Open ~/.vimrc
-nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+" nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+nnoremap <leader>ev :vsplit ~/.vim/_config<CR>
 
 " Quickly Reload ~/.vimrc
 nnoremap <leader>sv :source $MYVIMRC<CR>
@@ -41,8 +43,16 @@ nnoremap <leader>u' vi'yva'p
 nnoremap <leader>u" vi"yva"p
 
 " Append a char.
-nnoremap <leadrer>a, A,<ESC>
-nnoremap <leadrer>a; A;<ESC>
+nnoremap <leader>a, A,<ESC>
+nnoremap <leader>a. A.<ESC>
+nnoremap <leader>a; A;<ESC>
+nnoremap <leader>a: A:<ESC>
+nnoremap <leader>a/ A/<ESC>
+nnoremap <leader>a\ A\<ESC>
+nnoremap <leader>a\| A\|<ESC>
+nnoremap <leader>a' A'<ESC>
+nnoremap <leader>a" A"<ESC>
+nnoremap <leader>a` A`<ESC>
 
 " Quickly open a file under cursor as vsplit
 nnoremap gb :vertical wincmd f<CR>
