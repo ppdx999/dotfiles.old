@@ -9,7 +9,7 @@ let maplocalleader = ";"
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
 inoremap [<Enter> []<Left><CR><ESC><S-o>
-inoremap ({<Enter> ({})<Left><Left><CR><ESC><S-o>
+inoremap ({<Enter> ({});<Left><Left><Left><CR><ESC><S-o>
 
 
 if isdirectory(expand('~/.vim/plugged/nerdtree'))
