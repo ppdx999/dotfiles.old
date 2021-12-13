@@ -130,6 +130,8 @@ case "$(uname -s)" in
   Linux* )
     stty -ixon # disable Ctrl-s freez
     alias notion='google-chrome https://www.notion.so/login'
+    if [ -f /usr/share/java/junit.jar ]; then CLASSPATH="${CLASSPATH-}${CLASSPATH+:}/usr/share/java/junit.jar"; fi
+    bind 'set bell-style none'
     ;;
   MINGW* | CYGWIN* )
     export MSYS=winsymlinks:nativestrict
