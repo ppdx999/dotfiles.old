@@ -57,14 +57,15 @@ cnoremap <C-n> <Down>
 cnoremap <C-p> <Up>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
+
+inoremap jk <ESC>
 " }}}
 " Open & Close {{{
 nnoremap <Space>w  :<C-u>w<CR>
 nnoremap <Space>q  :<C-u>q<CR>
 nnoremap <Space>Q  :<C-u>q!<CR>
 
-" nnoremap <Space>f :NERDTree<CR>
-nnoremap <Space>f :Ve<CR>
+nnoremap <Space>f :NERDTree<CR>
 
 nnoremap <silent> tt  :<C-u>tabe<CR>
 nnoremap <C-p>  gT
@@ -587,7 +588,7 @@ endfunction
 " }}}
 " plantuml  {{{
 function! s:filetype_plantuml() abort
-  nnoremap <localleader>ex :<c-u>!plantuml -tsvg %
+  nnoremap <localleader>ex :<c-u>!plantuml -tsvg %<CR>
 endfunction
 " }}}
 
