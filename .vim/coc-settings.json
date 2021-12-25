@@ -12,8 +12,16 @@
     },
     "sql": {
       "command": "sql-language-server",
-      "args" : ["up", "--method", "stdio"],
+      "args": ["up", "--method", "stdio"],
       "filetypes": ["sql", "mysql"]
     }
-  }
+  },
+    "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "tsserver.formatOnType": true,
+  "prettier.disableSuccessMessage": true
 }

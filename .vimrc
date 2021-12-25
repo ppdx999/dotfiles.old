@@ -58,6 +58,11 @@ cnoremap <C-p> <Up>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
+inoremap <C-a> <Left>
+inoremap <C-d> <Right>
+inoremap <C-s> <Down>
+inoremap <C-w> <Up>
+
 inoremap jk <ESC>
 " }}}
 " Open & Close {{{
@@ -112,10 +117,10 @@ nnoremap ZQ <Nop>
 nnoremap Q gq
 " }}}
 " Coding Assistants {{{
-inoremap {<Enter> {}<Left><CR><ESC><S-o>
-inoremap (<Enter> ()<Left><CR><ESC><S-o>
-inoremap [<Enter> []<Left><CR><ESC><S-o>
-inoremap ({<Enter> ({});<Left><Left><Left><CR><ESC><S-o>
+" inoremap {<Enter> {}<Left><CR><ESC><S-o>
+" inoremap (<Enter> ()<Left><CR><ESC><S-o>
+" inoremap [<Enter> []<Left><CR><ESC><S-o>
+" inoremap ({<Enter> ({});<Left><Left><Left><CR><ESC><S-o>
 " Append a char {{{
 nnoremap <leader>a, A,<ESC>
 nnoremap <leader>a. A.<ESC>
@@ -612,6 +617,23 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
  set helplang=ja,en
  " }}}
  " Plug 'neoclide/coc.nvim', {'branch': 'release'} {{{
+ 
+" coc.nvim main {{{
+
+" Set global extensions
+let g:coc_global_extensions = [
+  \ 'coc-json',
+  \ 'coc-tsserver',
+  \ ]
+
+if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
+  let g:coc_global_extensions += ['coc-prettier']
+endif
+
+if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
+  let g:coc_global_extensions += ['coc-eslint']
+endif
+
  " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
  " unicode characters in the file autoload/float.vim
  set encoding=utf-8
@@ -675,6 +697,10 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
  
  " GoTo code navigation.
  nmap <silent> gd <Plug>(coc-definition)
+ nmap <silent> <leader>gd <Plug>(coc-definition)
+ nmap <silent> <leader>gs :sp<CR><Plug>(coc-definition)
+ nmap <silent> <leader>gv :vsp<CR><Plug>(coc-definition)
+ nmap <silent> <leader>gt :vsp<CR><Plug>(coc-definition)<C-W>T
  nmap <silent> gy <Plug>(coc-type-definition)
  nmap <silent> gi <Plug>(coc-implementation)
  nmap <silent> gr <Plug>(coc-references)
@@ -700,6 +726,7 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
  
  " Formatting selected code.
  xmap <leader>f  <Plug>(coc-format-selected)
+ " nmap <leader>f  <Plug>(coc-format-selected)
  nmap <leader>f  <Plug>(coc-format-selected)
  
  augroup mygroup
@@ -777,6 +804,14 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
  nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
  " Resume latest coc list.
  nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+" }}}
+" coc.nvim plugins {{{
+ nmap <leader>p  :<C-u>CocCommand prettier.formatFile<CR>
+" }}}
  " }}}
+" nerdtree {{{
+let NERDTreeShowHidden=1
+" }}}
+
 endif
 " " }}}

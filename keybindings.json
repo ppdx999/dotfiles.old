@@ -1,12 +1,14 @@
-// Alt+h = left
-// Alt+j = down
-// Alt+k = up
-// Alt+l = right
-// Alt+u = home
-// Alt+m = end
-// Alt+f = next-word
-// Alt+b = prev-word
 [
+  /**
+    Alt+h = left
+    Alt+j = down
+    Alt+k = up
+    Alt+l = right
+    Alt+u = home
+    Alt+m = end
+    Alt+f = next-word
+    Alt+b = prev-word
+  */
   {
     "key": "alt+j",
     "command": "workbench.action.quickOpenSelectNext",
@@ -213,5 +215,28 @@
     "key": "alt+k",
     "command": "workbench.action.compareEditor.previousChange",
     "when": "textCompareEditorVisible && !findInputFocussed"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "editor.action.joinLines"
+  },
+  /**
+    Functional Programming
+  */
+  {
+    /* arrow function*/
+    "key": "alt+a",
+    "command": "editor.action.insertSnippet",
+    "args": {
+      "snippet": "=>"
+    }
+  },
+  {
+    /* pipeline */
+    "key": "alt+p",
+    "command": "editor.action.insertSnippet",
+    "args": {
+      "snippet": "['>']("
+    }
   }
 ]
