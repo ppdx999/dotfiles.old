@@ -615,6 +615,8 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
  Plug 'mattn/vim-lsp-settings'
  Plug 'prabirshrestha/asyncomplete.vim'
  Plug 'prabirshrestha/asyncomplete-lsp.vim'
+ Plug 'preservim/tagbar'
+
 
  call plug#end()
 
@@ -679,12 +681,13 @@ augroup lsp_install
 augroup END
 
 " }}}
-
 " {{{ asyncomplete
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
 " }}}
-
+" {{{ tagbar
+nmap <F8> :TagbarToggle<CR>
+" }}}
 endif
 " " }}}
