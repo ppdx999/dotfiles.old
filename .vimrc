@@ -617,6 +617,7 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
  Plug 'prabirshrestha/asyncomplete-lsp.vim'
  Plug 'preservim/tagbar'
 
+ Plug 'prettier/vim-prettier', { 'do': 'npm install --frozen-lockfile --production' }
  call plug#end()
 
  " Plug 'vim-jp/vimdoc-ja' {{{
