@@ -617,7 +617,6 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
  Plug 'prabirshrestha/asyncomplete-lsp.vim'
  Plug 'preservim/tagbar'
 
-
  call plug#end()
 
  " Plug 'vim-jp/vimdoc-ja' {{{
@@ -669,7 +668,7 @@ function! s:on_lsp_buffer_enabled() abort
     nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
 
     let g:lsp_format_sync_timeout = 1000
-    autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+    autocmd! BufWritePre *.rs,*.go,*c,*cpp,*js,*ts,*jsx,*tsx,*hs,*sh,*json call execute('LspDocumentFormatSync')
     
     " refer to doc to add more commands
 endfunction
