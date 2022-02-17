@@ -92,6 +92,10 @@ nnoremap gb :vertical wincmd f<CR>
 
 
 " }}}
+" {{{ Window
+nnoremap <leader>w <C-w>w
+
+" }}}
 " Search & Substitution {{{
 nnoremap <Space>/  *<C-o>
 nnoremap g<Space>/ g*<C-o>
@@ -422,7 +426,7 @@ endfunction
 " vim {{{
 function! s:filetype_vim() abort
   setlocal foldmethod=marker
-  vnoremap <leader>vs :<c-u>call <SID>insTxtAroundSelection('" {{{','" }}}')<CR>
+  vnoremap <localleader>f :<c-u>call <SID>insTxtAroundSelection('" {{{','" }}}')<CR>
 endfunction
 " }}}
 " markdown {{{
