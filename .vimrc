@@ -622,6 +622,9 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
  Plug 'preservim/tagbar'
 
  Plug 'prettier/vim-prettier', { 'do': 'npm install --frozen-lockfile --production' }
+
+ Plug 'previm/previm'
+
  call plug#end()
 
  " Plug 'vim-jp/vimdoc-ja' {{{
@@ -692,6 +695,9 @@ inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
 " }}}
 " {{{ tagbar
 nmap <F8> :TagbarToggle<CR>
+" }}}
+" {{{ previm
+let g:previm_open_cmd='xdg-open'
 " }}}
 endif
 " " }}}
