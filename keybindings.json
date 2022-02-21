@@ -197,5 +197,18 @@
   {
     "key": "ctrl+j",
     "command": "editor.action.joinLines"
+  },
+  /*
+   * Text Tables
+   */
+  {
+    "key": "tab",
+    "command": "text-tables.gotoNextCell",
+    "when": "tableMode"
+  },
+  {
+    "key": "shift-tab",
+    "command": "text-tables.gotoPreviousCell",
+    "when": "tableMode"
   }
 ]
