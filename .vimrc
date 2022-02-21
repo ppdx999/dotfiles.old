@@ -625,6 +625,9 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
 
  Plug 'previm/previm'
 
+ Plug 'godlygeek/tabular'
+ Plug 'preservim/vim-markdown'
+
  call plug#end()
 
  " Plug 'vim-jp/vimdoc-ja' {{{
@@ -698,6 +701,9 @@ nmap <F8> :TagbarToggle<CR>
 " }}}
 " {{{ previm
 let g:previm_open_cmd='xdg-open'
+" }}}
+" {{{ vim-markdown
+let g:vim_markdown_folding_disabled = 1
 " }}}
 endif
 " " }}}
