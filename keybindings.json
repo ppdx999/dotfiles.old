@@ -40,7 +40,7 @@
     "when": "inputFocus && !editorFocus && !findInputFocussed && !findWidgetVisible"
   },
   {
-    "key": "ctrl+f",
+    "key": "ctrl+b",
     "command": "cursorLeft",
     "when": "editorTextFocus"
   },
@@ -55,12 +55,12 @@
     "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+b",
+    "key": "ctrl+f",
     "command": "cursorRight",
     "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+shift+f",
+    "key": "ctrl+shift+b",
     "command": "cursorLeftSelect",
     "when": "editorTextFocus"
   },
@@ -75,7 +75,7 @@
     "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+shift+b",
+    "key": "ctrl+shift+f",
     "command": "cursorRightSelect",
     "when": "editorTextFocus"
   },
