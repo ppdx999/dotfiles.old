@@ -594,6 +594,7 @@ endfunction
 " plantuml  {{{
 function! s:filetype_plantuml() abort
   nnoremap <localleader>ex :<c-u>!plantuml -tsvg %<CR>
+  command! OpenUml : !google-chrome %
 endfunction
 " }}}
 
@@ -627,6 +628,11 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
 
  Plug 'godlygeek/tabular'
  Plug 'preservim/vim-markdown'
+
+ Plug 'tyru/open-browser.vim'
+ Plug 'weirongxu/plantuml-previewer.vim'
+
+ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
  call plug#end()
 
@@ -671,6 +677,7 @@ function! s:on_lsp_buffer_enabled() abort
     nmap <buffer> gr <plug>(lsp-references)
     nmap <buffer> gi <plug>(lsp-implementation)
     nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> ge <plug>(lsp-document-diagnostics)
     nmap <buffer> <leader>rn <plug>(lsp-rename)
     nmap <buffer> [g <plug>(lsp-previous-diagnostic)
     nmap <buffer> ]g <plug>(lsp-next-diagnostic)
