@@ -101,6 +101,10 @@ nnoremap gb :vertical wincmd f<CR>
 " }}}
 " {{{ Window
 nnoremap <leader>w <C-w>w
+nnoremap <c-h> <c-w><c-h>
+nnoremap <c-j> <c-w><c-j>
+nnoremap <c-k> <c-w><c-k>
+nnoremap <c-l> <c-w><c-l>
 
 " }}}
 " Search & Substitution {{{
@@ -647,10 +651,9 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
  set helplang=ja,en
  " }}}
 " nerdtree {{{
-let g:NERDTreeMapUpdir='<C-u>'
-let g:NERDTreeMapOpenSplit='<C-j>'
-let g:NERDTreeMapOpenVSplit='<C-l>'
-
+" let g:NERDTreeMapUpdir='<C-u>'
+" let g:NERDTreeMapOpenSplit='<C-j>'
+" let g:NERDTreeMapOpenVSplit='<C-l>'
 let g:NERDTreeShowHidden=1
 " }}}
 "{{{ vim-gitgutter
