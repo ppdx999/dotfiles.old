@@ -645,6 +645,8 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
 
  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
+ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+ Plug 'junegunn/fzf.vim'
  call plug#end()
 
  " Plug 'vim-jp/vimdoc-ja' {{{
