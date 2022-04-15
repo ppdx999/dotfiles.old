@@ -647,6 +647,9 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
 
  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
  Plug 'junegunn/fzf.vim'
+
+ Plug 'tpope/vim-fugitive'
+
  call plug#end()
 
  " Plug 'vim-jp/vimdoc-ja' {{{
