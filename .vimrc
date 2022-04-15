@@ -649,6 +649,7 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
  Plug 'junegunn/fzf.vim'
 
  Plug 'tpope/vim-fugitive'
+ Plug 'tpope/vim-unimpaired'
 
  call plug#end()
 
