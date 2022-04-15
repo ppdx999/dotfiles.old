@@ -37,7 +37,14 @@ set background=dark
 colorscheme hybrid
 " set t_Co=256
 
-" }}}
+set undofile
+if !isdirectory(expand("$HOME/.vim/undodir"))
+  call mkdir(expand("$HOME/.vim/undodir"), "p")
+endif
+set undodir=$HOME/.vim/undodir
+
+
+"" }}}
 " mapping {{{
 
 " leader key mapping {{{
