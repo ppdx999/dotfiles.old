@@ -49,7 +49,7 @@ set undodir=$HOME/.vim/undodir
 
 " leader key mapping {{{
 let mapleader = ","
-let maplocalleader = ";"
+let maplocalleader = "."
 " }}}
 " Cursor {{{
 nnoremap k   gk
@@ -167,6 +167,10 @@ if has('win32unix')
 	vnoremap <silent> <leader>y :call <SID>Putclip(visualmode(), 1)<CR>
 	nnoremap <silent> <leader>y :call <SID>Putclip('n', 1)<CR>
 endif
+" }}}
+
+" MISC {{{
+nnoremap ; :
 " }}}
 
 " }}}
