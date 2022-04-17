@@ -74,6 +74,9 @@ inoremap <C-s> <Down>
 inoremap <C-w> <Up>
 
 inoremap jk <ESC>
+
+nnoremap <Space>h  ^
+nnoremap <Space>l  $
 " }}}
 " Open & Close {{{
 nnoremap <Space>w  :<C-u>w<CR>
@@ -106,6 +109,9 @@ nnoremap <c-j> <c-w><c-j>
 nnoremap <c-k> <c-w><c-k>
 nnoremap <c-l> <c-w><c-l>
 
+nnoremap <Space>w  :<C-u>w<CR>
+nnoremap <Space>q  :<C-u>q<CR>
+nnoremap <Space>Q  :<C-u>q!<CR>
 " }}}
 " Search & Substitution {{{
 nnoremap <Space>/  *<C-o>
@@ -170,7 +176,10 @@ endif
 " }}}
 
 " MISC {{{
-nnoremap ; :
+nnoremap ;  :
+nnoremap :  ;
+vnoremap ;  :
+vnoremap :  ;
 " }}}
 
 " }}}
