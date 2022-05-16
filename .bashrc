@@ -125,6 +125,7 @@ HISTSIZE=20000
 HISTFILESIZE=20000
 if [ -d $HOME/.local/lib/shellshoccar/bin ]; then PATH="$PATH:$HOME/.local/lib/shellshoccar/bin"; fi
 if [ -d $HOME/.poetry/bin ]; then PATH="$PATH:$HOME/.poetry/bin"; fi
+PATH="$PATH:/usr/local/go/bin" # go-land
 #export LC_ALL=C
 
 case "$(uname -s)" in
