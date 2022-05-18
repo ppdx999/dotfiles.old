@@ -9,7 +9,8 @@ set fileencodings=utf-8,sjis,ucs-boms,euc-jp,cp932
 syntax enable
 filetype on
 
-set ambiwidth=double
+" set ambiwidth=double
+set ambiwidth=single
 set nobackup
 set nowritebackup
 set number
@@ -680,6 +681,7 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
  Plug 'tpope/vim-fugitive'
  Plug 'tpope/vim-unimpaired'
 
+ Plug 'rbtnn/vim-ambiwidth'
  call plug#end()
 
  " Plug 'vim-jp/vimdoc-ja' {{{
