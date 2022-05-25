@@ -116,16 +116,30 @@ if ! shopt -oq posix; then
   fi
 fi
 
+
+include(){
+    case _"$1" in 
+      _*"$2"* ) return 0 ;;
+      * ) return 1 ;;
+    esac
+}
+
+addPath() {
+    if ! include "$PATH" "$1"; then
+        PATH="$PATH:$1"
+    fi
+}
+
 # My Settings
 export PS1='\[\e[1;32m\]\u\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]:$\[\e[0m\] '
 alias ls='ls --color=auto -F'
-PATH="$PATH:$HOME/bin"
-PATH="$PATH:$HOME/.local/bin"
+addPath "$HOME/bin"
+addPath "$HOME/.local/bin"
 HISTSIZE=20000
 HISTFILESIZE=20000
-if [ -d $HOME/.local/lib/shellshoccar/bin ]; then PATH="$PATH:$HOME/.local/lib/shellshoccar/bin"; fi
-if [ -d $HOME/.poetry/bin ]; then PATH="$PATH:$HOME/.poetry/bin"; fi
-PATH="$PATH:/usr/local/go/bin" # go-land
+if [ -d $HOME/.local/lib/shellshoccar/bin ]; then addPath "$HOME/.local/lib/shellshoccar/bin"; fi
+if [ -d $HOME/.poetry/bin ]; then addPath "$HOME/.poetry/bin"; fi
+addPath "/usr/local/go/bin" # go-land
 alias ts-node='node_modules/.bin/ts-node' # alias for ts-node
 #export LC_ALL=C
 
