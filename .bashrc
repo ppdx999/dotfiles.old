@@ -149,6 +149,7 @@ case "$(uname -s)" in
     alias notion='google-chrome https://www.notion.so/login'
     if [ -f /usr/share/java/junit.jar ]; then CLASSPATH="${CLASSPATH-}${CLASSPATH+:}/usr/share/java/junit.jar"; fi
     bind 'set bell-style none'
+    if [ -d $HOME/workspace/kotoriotoko/BIN ]; then addPath "$HOME/workspace/kotoriotoko/BIN"; fi
     ;;
   MINGW* | CYGWIN* )
     export MSYS=winsymlinks:nativestrict
