@@ -770,6 +770,10 @@ endfunction
 function! s:shell_check() abort
   let fname = bufname("%")
   silent let result = system("shellcheck " . fname)
+  if result ==# ''
+    echom 'shellcheck: no warning and error found'
+    return
+  endif
   silent! exe "noautocmd botright pedit " . "shellcheck"
   noautocmd wincmd P
   set buftype=nofile
