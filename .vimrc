@@ -50,7 +50,7 @@ set undodir=$HOME/.vim/undodir
 
 " leader key mapping {{{
 let mapleader = ","
-let maplocalleader = "."
+let maplocalleader = "'"
 " }}}
 " Cursor {{{
 nnoremap k   gk
@@ -379,6 +379,129 @@ function! s:execute_ctags() abort
 endfunction
 " }}}
 " }}}
+"{{{ plugin 
+ 
+if filereadable(expand('~/.vim/autoload/plug.vim'))
+ call plug#begin('~/.vim/plugged')
+ 
+ Plug 'airblade/vim-gitgutter'
+ Plug 'vim-jp/vimdoc-ja'
+ Plug 'tpope/vim-surround'
+ Plug 'tpope/vim-commentary'
+ Plug 'mattn/emmet-vim'
+ Plug 'preservim/nerdtree'
+ Plug 'sheerun/vim-polyglot'
+ Plug 'jiangmiao/auto-pairs'
+ Plug 'aklt/plantuml-syntax'
+ Plug 'leafgarland/typescript-vim'
+ Plug 'yuttie/comfortable-motion.vim'
+
+ Plug 'prabirshrestha/vim-lsp'
+ Plug 'mattn/vim-lsp-settings'
+ Plug 'prabirshrestha/asyncomplete.vim'
+ Plug 'prabirshrestha/asyncomplete-lsp.vim'
+ Plug 'preservim/tagbar'
+
+ Plug 'prettier/vim-prettier', { 'do': 'npm install --frozen-lockfile --production' }
+
+ Plug 'previm/previm'
+
+ Plug 'godlygeek/tabular'
+ Plug 'preservim/vim-markdown'
+
+ Plug 'tyru/open-browser.vim'
+ Plug 'weirongxu/plantuml-previewer.vim'
+
+ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+
+ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+ Plug 'junegunn/fzf.vim'
+
+ Plug 'tpope/vim-fugitive'
+ Plug 'tpope/vim-unimpaired'
+
+ Plug 'rbtnn/vim-ambiwidth'
+
+ Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
+ call plug#end()
+
+ " Plug 'vim-jp/vimdoc-ja' {{{
+ set helplang=ja,en
+ " }}}
+" nerdtree {{{
+" let g:NERDTreeMapUpdir='<C-u>'
+" let g:NERDTreeMapOpenSplit='<C-j>'
+" let g:NERDTreeMapOpenVSplit='<C-l>'
+let g:NERDTreeShowHidden=1
+" }}}
+"{{{ vim-gitgutter
+nmap <silent> <C-g><C-n> <Plug>GitGutterNextHunk
+nmap <silent> <C-g><C-p> <Plug>GitGutterPrevHunk
+"}}}
+" {{{ comfortable-motion
+nnoremap <silent> <C-f> :call comfortable_motion#flick(200)<CR>
+nnoremap <silent> <C-b> :call comfortable_motion#flick(-200)<CR>
+let g:comfortable_motion_interval = 2400.0 / 60
+let g:comfortable_motion_friction = 100.0
+let g:comfortable_motion_air_drag = 3.0
+" }}}
+" {{{ vim-lsp
+if executable('pyls')
+    " pip install python-language-server
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'allowlist': ['python'],
+        \ })
+endif
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gs <plug>(lsp-document-symbol-search)
+    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> ge <plug>(lsp-document-diagnostics)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+    " nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+    " nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+
+    let g:lsp_format_sync_timeout = 1000
+    autocmd! BufWritePre *.rs,*.go,*c,*cpp,*js,*ts,*jsx,*tsx,*hs,*sh,*json call execute('LspDocumentFormatSync')
+    
+    " refer to doc to add more commands
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+" }}}
+" {{{ asyncomplete
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+" }}}
+" {{{ tagbar
+nmap <F8> :TagbarToggle<CR>
+" }}}
+" {{{ previm
+let g:previm_open_cmd='xdg-open'
+" }}}
+" {{{ vim-markdown
+let g:vim_markdown_folding_disabled = 1
+" }}}
+endif
+" " }}}
 " filetype {{{
 
 " DefineFiletype {{{
@@ -638,126 +761,22 @@ function! s:filetype_haskell() abort
   " endif
 endfunction
 " }}}
-
-" }}}
-"{{{ plugin 
- 
-if filereadable(expand('~/.vim/autoload/plug.vim'))
- call plug#begin('~/.vim/plugged')
- 
- Plug 'airblade/vim-gitgutter'
- Plug 'vim-jp/vimdoc-ja'
- Plug 'tpope/vim-surround'
- Plug 'tpope/vim-commentary'
- Plug 'mattn/emmet-vim'
- Plug 'preservim/nerdtree'
- Plug 'sheerun/vim-polyglot'
- Plug 'jiangmiao/auto-pairs'
- Plug 'aklt/plantuml-syntax'
- Plug 'leafgarland/typescript-vim'
- Plug 'yuttie/comfortable-motion.vim'
-
- Plug 'prabirshrestha/vim-lsp'
- Plug 'mattn/vim-lsp-settings'
- Plug 'prabirshrestha/asyncomplete.vim'
- Plug 'prabirshrestha/asyncomplete-lsp.vim'
- Plug 'preservim/tagbar'
-
- Plug 'prettier/vim-prettier', { 'do': 'npm install --frozen-lockfile --production' }
-
- Plug 'previm/previm'
-
- Plug 'godlygeek/tabular'
- Plug 'preservim/vim-markdown'
-
- Plug 'tyru/open-browser.vim'
- Plug 'weirongxu/plantuml-previewer.vim'
-
- Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-
- Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
- Plug 'junegunn/fzf.vim'
-
- Plug 'tpope/vim-fugitive'
- Plug 'tpope/vim-unimpaired'
-
- Plug 'rbtnn/vim-ambiwidth'
- call plug#end()
-
- " Plug 'vim-jp/vimdoc-ja' {{{
- set helplang=ja,en
- " }}}
-" nerdtree {{{
-" let g:NERDTreeMapUpdir='<C-u>'
-" let g:NERDTreeMapOpenSplit='<C-j>'
-" let g:NERDTreeMapOpenVSplit='<C-l>'
-let g:NERDTreeShowHidden=1
-" }}}
-"{{{ vim-gitgutter
-nmap <silent> <C-g><C-n> <Plug>GitGutterNextHunk
-nmap <silent> <C-g><C-p> <Plug>GitGutterPrevHunk
-"}}}
-" {{{ comfortable-motion
-nnoremap <silent> <C-f> :call comfortable_motion#flick(200)<CR>
-nnoremap <silent> <C-b> :call comfortable_motion#flick(-200)<CR>
-let g:comfortable_motion_interval = 2400.0 / 60
-let g:comfortable_motion_friction = 100.0
-let g:comfortable_motion_air_drag = 3.0
-" }}}
-" {{{ vim-lsp
-if executable('pyls')
-    " pip install python-language-server
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'pyls',
-        \ 'cmd': {server_info->['pyls']},
-        \ 'allowlist': ['python'],
-        \ })
-endif
-
-function! s:on_lsp_buffer_enabled() abort
-    setlocal omnifunc=lsp#complete
-    setlocal signcolumn=yes
-    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-    nmap <buffer> gd <plug>(lsp-definition)
-    nmap <buffer> gs <plug>(lsp-document-symbol-search)
-    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
-    nmap <buffer> gr <plug>(lsp-references)
-    nmap <buffer> gi <plug>(lsp-implementation)
-    nmap <buffer> gt <plug>(lsp-type-definition)
-    nmap <buffer> ge <plug>(lsp-document-diagnostics)
-    nmap <buffer> <leader>rn <plug>(lsp-rename)
-    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
-    nmap <buffer> K <plug>(lsp-hover)
-    " nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
-    " nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
-
-    let g:lsp_format_sync_timeout = 1000
-    autocmd! BufWritePre *.rs,*.go,*c,*cpp,*js,*ts,*jsx,*tsx,*hs,*sh,*json call execute('LspDocumentFormatSync')
-    
-    " refer to doc to add more commands
+"{{{ sh
+function! s:filetype_sh() abort
+  nnoremap <localleader>f :<c-u>Shfmt<CR>
+  nnoremap <localleader>c :<c-u> call <SID>shell_check()<CR>
 endfunction
 
-augroup lsp_install
-    au!
-    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
+function! s:shell_check() abort
+  let fname = bufname("%")
+  silent let result = system("shellcheck " . fname)
+  silent! exe "noautocmd botright pedit " . "shellcheck"
+  noautocmd wincmd P
+  set buftype=nofile
+  exe "normal! gg_dG"
+  exe "normal! i" . result . "\<ESC>"
+  noautocmd wincmd p
+endfunction
+"}}}
 
 " }}}
-" {{{ asyncomplete
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
-" }}}
-" {{{ tagbar
-nmap <F8> :TagbarToggle<CR>
-" }}}
-" {{{ previm
-let g:previm_open_cmd='xdg-open'
-" }}}
-" {{{ vim-markdown
-let g:vim_markdown_folding_disabled = 1
-" }}}
-endif
-" " }}}
