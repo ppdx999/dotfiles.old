@@ -140,6 +140,7 @@ HISTFILESIZE=20000
 if [ -d $HOME/.local/lib/shellshoccar/bin ]; then addPath "$HOME/.local/lib/shellshoccar/bin"; fi
 if [ -d $HOME/.poetry/bin ]; then addPath "$HOME/.poetry/bin"; fi
 addPath "/usr/local/go/bin" # go-land
+addPath "$HOME/go/bin" # go-land
 alias ts-node='node_modules/.bin/ts-node' # alias for ts-node
 alias cdw='cd ~/workspace' # alias for ts-node
 alias v='vi'
