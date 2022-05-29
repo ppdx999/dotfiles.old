@@ -765,6 +765,7 @@ endfunction
 function! s:filetype_sh() abort
   nnoremap <localleader>f :<c-u>Shfmt<CR>
   nnoremap <localleader>c :<c-u> call <SID>shell_check()<CR>
+  nnoremap <localleader>e :<c-u>!./%<Space>
 endfunction
 
 function! s:shell_check() abort
