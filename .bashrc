@@ -113,3 +113,7 @@ alias ts-node='node_modules/.bin/ts-node' # alias for ts-node
 alias cdw='cd ~/workspace' # alias for ts-node
 alias v='vim'
 alias v='vim'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
