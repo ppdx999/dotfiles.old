@@ -35,7 +35,6 @@ set cmdheight=2
 set vb t_vb=
 
 set background=dark
-colorscheme hybrid
 " set t_Co=256
 
 set undofile
@@ -359,7 +358,45 @@ function! s:GetFiletypes()
 endfunction
 " }}}
 
-
+"{{{ SyntaxInfo
+function! s:get_syn_id(transparent)
+  let synid = synID(line("."), col("."), 1)
+  if a:transparent
+    return synIDtrans(synid)
+  else
+    return synid
+  endif
+endfunction
+function! s:get_syn_attr(synid)
+  let name = synIDattr(a:synid, "name")
+  let ctermfg = synIDattr(a:synid, "fg", "cterm")
+  let ctermbg = synIDattr(a:synid, "bg", "cterm")
+  let guifg = synIDattr(a:synid, "fg", "gui")
+  let guibg = synIDattr(a:synid, "bg", "gui")
+  return {
+        \ "name": name,
+        \ "ctermfg": ctermfg,
+        \ "ctermbg": ctermbg,
+        \ "guifg": guifg,
+        \ "guibg": guibg}
+endfunction
+function! s:get_syn_info()
+  let baseSyn = s:get_syn_attr(s:get_syn_id(0))
+  echo "name: " . baseSyn.name .
+        \ " ctermfg: " . baseSyn.ctermfg .
+        \ " ctermbg: " . baseSyn.ctermbg .
+        \ " guifg: " . baseSyn.guifg .
+        \ " guibg: " . baseSyn.guibg
+  let linkedSyn = s:get_syn_attr(s:get_syn_id(1))
+  echo "link to"
+  echo "name: " . linkedSyn.name .
+        \ " ctermfg: " . linkedSyn.ctermfg .
+        \ " ctermbg: " . linkedSyn.ctermbg .
+        \ " guifg: " . linkedSyn.guifg .
+        \ " guibg: " . linkedSyn.guibg
+endfunction
+command! SyntaxInfo call s:get_syn_info()
+"}}}
 " function! s:execute_ctags() abort  {{{
 function! s:execute_ctags() abort
   " 探すタグファイル名
@@ -377,6 +414,7 @@ function! s:execute_ctags() abort
   " 見つかったタグファイルのディレクトリに移動して、ctagsをバックグラウンド実行（エラー出力破棄）
   execute 'silent !cd' tags_dirpath '&& ctags -R -f' tag_name '2> /dev/null &'
 endfunction
+
 " }}}
 " }}}
 "{{{ plugin
@@ -424,6 +462,9 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
 
  Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
  Plug 'w0rp/ale'
+
+ Plug 'morhetz/gruvbox'
+ Plug 'maxmellon/vim-jsx-pretty'
 
  call plug#end()
 " }}}
@@ -510,6 +551,9 @@ let g:ale_fixers = {
 \  'typescript': ['prettier','eslint'],
 \}
 let g:ale_fix_on_save = 1
+" }}}
+" {{{ gruvbox
+colorscheme gruvbox
 " }}}
 endif
 " " }}}
