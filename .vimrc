@@ -221,7 +221,7 @@ function! s:padcutTextWith(text,padChar,maxLen)
 		let rval = substitute(rval, '^\(.\{0,' . a:maxLen .'\}\).*$', '\1', '')
 	else
 		for i in range(lineLen, a:maxLen)
-			let rval .= a:padChar 
+			let rval .= a:padChar
 		endfor
 	endif
 	return rval
@@ -235,7 +235,7 @@ function! s:commentOut(commentChar)
 	let mode = 'uncomment'
 	for lineNum in range(lineStart, lineEnd)
 		let oldLine = getline(lineNum)
-		if(matchstr(oldLine, '\S\S*') !~# a:commentChar . '\S*') 
+		if(matchstr(oldLine, '\S\S*') !~# a:commentChar . '\S*')
 			let mode = 'comment'
 		endif
 	endfor
@@ -243,7 +243,7 @@ function! s:commentOut(commentChar)
 	if mode ==# 'comment'
 		for lineNum in range(lineStart, lineEnd)
 			let oldLine = getline(lineNum)
-			if(matchstr(oldLine, '\S\S*') !~# a:commentChar . '\S*') 
+			if(matchstr(oldLine, '\S\S*') !~# a:commentChar . '\S*')
 				let newLine = a:commentChar . ' ' . oldLine
 				call setline(lineNum, newLine)
 			endif
@@ -379,11 +379,11 @@ function! s:execute_ctags() abort
 endfunction
 " }}}
 " }}}
-"{{{ plugin 
- 
+"{{{ plugin
 if filereadable(expand('~/.vim/autoload/plug.vim'))
+ "{{{
  call plug#begin('~/.vim/plugged')
- 
+
  Plug 'airblade/vim-gitgutter'
  Plug 'vim-jp/vimdoc-ja'
  Plug 'tpope/vim-surround'
@@ -423,8 +423,10 @@ if filereadable(expand('~/.vim/autoload/plug.vim'))
  Plug 'rbtnn/vim-ambiwidth'
 
  Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
- call plug#end()
+ Plug 'w0rp/ale'
 
+ call plug#end()
+" }}}
  " Plug 'vim-jp/vimdoc-ja' {{{
  set helplang=ja,en
  " }}}
@@ -474,8 +476,8 @@ function! s:on_lsp_buffer_enabled() abort
     " nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
 
     let g:lsp_format_sync_timeout = 1000
-    autocmd! BufWritePre *.rs,*.go,*c,*cpp,*js,*ts,*jsx,*tsx,*hs,*sh,*json call execute('LspDocumentFormatSync')
-    
+    " autocmd! BufWritePre *.rs,*.go,*c,*cpp,*js,*ts,*jsx,*tsx,*hs,*sh,*json call execute('LspDocumentFormatSync')
+
     " refer to doc to add more commands
 endfunction
 
@@ -499,6 +501,15 @@ let g:previm_open_cmd='xdg-open'
 " }}}
 " {{{ vim-markdown
 let g:vim_markdown_folding_disabled = 1
+" }}}
+" {{{ ale
+" ale
+let g:ale_fixers = {
+\  '*': ['remove_trailing_lines', 'trim_whitespace'],
+\  'javascript': ['eslint'],
+\  'typescript': ['prettier','eslint'],
+\}
+let g:ale_fix_on_save = 1
 " }}}
 endif
 " " }}}
@@ -613,13 +624,13 @@ function! s:MarkdownFormatList()
 		let oldLine = getline(lineNum)
 		if oldLine =~# '^- \S\S*'
 			continue
-		elseif oldLine =~# '^\t\{1,\}- \S\{1,\}' 
+		elseif oldLine =~# '^\t\{1,\}- \S\{1,\}'
 			continue
 		elseif oldLine =~# '^\(    \)\{1,\}- \S\{1,\}'
 			continue
 		elseif oldLine =~# '^\d\. \S\{1,\}'
 			continue
-		elseif oldLine =~# '^\t\{1,\}\d\. \S\{1,\}' 
+		elseif oldLine =~# '^\t\{1,\}\d\. \S\{1,\}'
 			continue
 		elseif oldLine =~# '^\(    \)\{1,\}\d\. \S\{1,\}'
 			continue
@@ -642,10 +653,10 @@ function! s:IAPipe()
 	for lineNum in range(lineStart, lineEnd)
 		let oldLine = getline(lineNum)
 		let newLine = oldLine
-		if(matchstr(oldLine, '\S') !~# '|') 
+		if(matchstr(oldLine, '\S') !~# '|')
 			let newLine = '|' . newLine
 		endif
-		if(matchstr(oldLine, '\S$') !~# '|') 
+		if(matchstr(oldLine, '\S$') !~# '|')
 			let newLine = newLine . '|'
 		endif
 		call setline(lineNum, newLine)
@@ -656,7 +667,7 @@ function! s:appendTableHeader()
     let lineStart = getpos("'<")[1]
 	let firstLine = getline(lineStart+1)
 	let secondLine = getline(lineStart+1)
-	if(matchstr(secondLine, '---') ==# '') 
+	if(matchstr(secondLine, '---') ==# '')
 		let newLine = '|'
 		let nCol = len(split(firstLine, '|', 1))-2
 		for i in range(0,nCol-1)
@@ -692,7 +703,7 @@ function! s:formatTable()
 		if matchstr(lines[i], '|') ==# "" | continue | endif
 
 		let strList = split(lines[i], '|' , 1)
-		let nStrList = len(split(lines[i], '|' , 1)) 
+		let nStrList = len(split(lines[i], '|' , 1))
 
 		for j in range(0, nStrList-1)
 			let nStr = s:strlenX(strList[j])
@@ -702,15 +713,15 @@ function! s:formatTable()
 		endfor
 	endfor
 
-	" Adds whitespace based on the 'cellLength' value. And write it to buffer. 
+	" Adds whitespace based on the 'cellLength' value. And write it to buffer.
 	for i in range(0, nLines-1)
 		if matchstr(lines[i], '|') ==# "" | continue | endif
 
 		let strList = split(lines[i], '|' , 1)
-		let nStrList = len(split(lines[i], '|' , 1)) 
+		let nStrList = len(split(lines[i], '|' , 1))
 
 		for j in range(0, nStrList-1)
-			let nAddSpace = cellLengths[j] - s:strlenX(strList[j]) 
+			let nAddSpace = cellLengths[j] - s:strlenX(strList[j])
 			for k in range(0, nAddSpace-1)
 				let strList[j] .= ' '
 			endfor
@@ -723,7 +734,7 @@ endfunction
 " }}}
 " function! s:strlenX(text) {{{
 function! s:strlenX(text)
-" Count 3byte-char as two 
+" Count 3byte-char as two
 	let single_multi_total = strlen(a:text)
 	if &ambiwidth !=# 'double'
 		return single_multi_total
