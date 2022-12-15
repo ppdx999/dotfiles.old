@@ -31,15 +31,6 @@ set clipboard=unnamedplus
 set cmdheight=2
 set vb t_vb=
 
-nnoremap <Space>w  :<C-u>w<CR>
-nnoremap <Space>q  :<C-u>q<CR>
-nnoremap <Space>Q  :<C-u>q!<CR>
-
-nnoremap ;  :
-nnoremap :  ;
-vnoremap ;  :
-vnoremap :  ;
-
 let mapleader = ","
 let maplocalleader = ";"
 
@@ -59,20 +50,12 @@ cnoremap <C-p> <Up>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
-nnoremap <Space>h  ^
-nnoremap <Space>l  $
-
-nnoremap <Space>w  :<C-u>w<CR>
-nnoremap <Space>q  :<C-u>q<CR>
-nnoremap <Space>Q  :<C-u>q!<CR>
-
 nnoremap <Space>f :Ve<CR>
 
 nnoremap <silent> tt  :<C-u>tabe<CR>
-nnoremap <C-p>  gT
-nnoremap <C-n>  gt
+nnoremap ]t :tabn<CR>
+nnoremap [t :tabp<CR>
 
-nnoremap <leader>w <C-w>w<CR>
 nnoremap <c-h> <c-w><c-h>
 nnoremap <c-j> <c-w><c-j>
 nnoremap <c-k> <c-w><c-k>
@@ -80,14 +63,9 @@ nnoremap <c-l> <c-w><c-l>
 
 nnoremap ]b :bnext<CR>
 nnoremap [b :bprev<CR>
-nnoremap ]t :tabn<CR>
-nnoremap [t :tabp<CR>
 
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
-
-nnoremap gb :vertical wincmd f<CR>
-
 
 nnoremap <Space>/  *<C-o>
 nnoremap g<Space>/ g*<C-o>
@@ -113,7 +91,6 @@ nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 nnoremap Q gq
 
-inoremap {<Enter> {}<Left><CR><ESC><S-o>
-inoremap (<Enter> ()<Left><CR><ESC><S-o>
-inoremap [<Enter> []<Left><CR><ESC><S-o>
-inoremap ({<Enter> ({});<Left><Left><Left><CR><ESC><S-o>
+call plug#begin('~/.vim/plugged')
+
+call plug#end()
