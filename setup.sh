@@ -90,6 +90,7 @@ setup_bash() {
 setup_zsh() {
   make_link "$dotdir/zsh/.zshrc" "$HOME/.zshrc"
   make_link "$dotdir/zsh/completions" "$HOME/.zsh_completions"
+  make_link "$dotdir/zsh/git-prompt.sh" "$HOME/.zsh_git-prompt.sh"
 }
 
 main() {
