@@ -35,6 +35,9 @@ set vb t_vb=
 let mapleader = ","
 let maplocalleader = ";"
 
+nnoremap <Space>w :<C-u>w<CR>
+nnoremap <Space>q :<C-u>q<CR>
+
 nnoremap k   gk
 nnoremap j   gj
 vnoremap k   gk
