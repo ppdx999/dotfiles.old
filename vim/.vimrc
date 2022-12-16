@@ -28,6 +28,7 @@ set hlsearch
 set ignorecase
 set smartcase
 set clipboard=unnamedplus
+set clipboard+=unnamed
 set cmdheight=2
 set vb t_vb=
 
