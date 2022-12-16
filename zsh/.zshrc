@@ -44,4 +44,4 @@ GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUPSTREAM=auto
 
-export PROMPT='%F{red}[%n@%m]%f %F{green}%~%f %F{cyan}$(__git_ps1 "(%s)")%f %# '
+setopt PROMPT_SUBST ; PS1='%F{red}[%n@%m]%f %F{green}%~%f %F{cyan}$(__git_ps1 "(%s)")%f %# '
