@@ -1,0 +1,63 @@
+{
+  "vim.easymotion": true,
+  "vim.incsearch": true,
+  "vim.useSystemClipboard": true,
+  "vim.useCtrlKeys": true,
+  "vim.hlsearch": true,
+  "vim.insertModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<C-f>", "f"],
+      "after": ["<Right>"]
+    },
+    {
+      "before": ["<C-b>", "b"],
+      "after": ["<Left>"]
+    }
+  ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<space>", "w"],
+      "after": [":", "w", "<CR>"]
+    },
+    {
+      "before": ["<space>", "q"],
+      "after": [":", "q", "<CR>"]
+    },
+    {
+      "before": ["<space>", "h"],
+      "after": ["^"]
+    },
+    {
+      "before": ["<space>", "l"],
+      "after": ["$"]
+    },
+    {
+      "before": ["<C-h>"],
+      "after": ["<C-w>", "<C-h>"]
+    },
+    {
+      "before": ["<C-j>"],
+      "after": ["<C-w>", "<C-j>"]
+    },
+    {
+      "before": ["<C-k>"],
+      "after": ["<C-w>", "<C-k>"]
+    },
+    {
+      "before": ["<C-l>"],
+      "after": ["<C-w>", "<C-l>"]
+    },
+    {
+      "before": ["<space>", "/"],
+      "after": ["*", "<C-o>"]
+    },
+    {
+      "before": ["g", "<space>", "/"],
+      "after": ["g", "*", "<C-o>"]
+    },
+    {
+      "before":["<C-n>"],
+      "commands": [ ":nohl" ]
+    }
+  ]
+}
