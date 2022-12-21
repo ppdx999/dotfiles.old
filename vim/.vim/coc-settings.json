@@ -16,5 +16,8 @@
         "elmAnalyseTrigger": "change"
       }
     }
-  }
+  },
+  "[elm]": {
+    "coc.preferences.formatOnSave": true
+   }
 }
