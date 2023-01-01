@@ -31,6 +31,8 @@ set clipboard=unnamedplus
 set clipboard+=unnamed
 set cmdheight=2
 set vb t_vb=
+set laststatus=2
+set statusline=%f
 
 let mapleader = ","
 let maplocalleader = ";"
