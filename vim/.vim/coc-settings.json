@@ -17,7 +17,7 @@
       }
     }
   },
-  "[elm]": {
+  "[elm][typescript]": {
     "coc.preferences.formatOnSave": true
    }
 }
