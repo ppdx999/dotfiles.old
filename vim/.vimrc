@@ -100,6 +100,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-surround'
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
   Plug 'preservim/nerdtree'
+  Plug 'tpope/vim-commentary'
+  Plug 'yuttie/comfortable-motion.vim'
 call plug#end()
 
 runtime! plugins/*.vim
