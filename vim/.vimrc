@@ -11,7 +11,7 @@ set ambiwidth=double
 set nobackup
 set nowritebackup
 set number
-set nowrap
+set wrap
 set nowrapscan
 set showmatch
 set autoindent
@@ -48,6 +48,9 @@ nnoremap gk  k
 nnoremap gj  j
 vnoremap gk  k
 vnoremap gj  j
+
+nnoremap <Space>h ^
+nnoremap <Space>l $
 
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
