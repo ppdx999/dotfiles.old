@@ -38,11 +38,10 @@ export NVM_DIR="$HOME/.nvm"
 # 3. Add PATH
 export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
 
-# Poetry Setup
-export PATH="/Users/fujiswork/.local/bin:$PATH"
-
-# Add $HOME/bin to $PATH
+# Add $HOME/bin $HOME/.local/bin to $PATH
 export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
 
 ############################
 # ALIAS
