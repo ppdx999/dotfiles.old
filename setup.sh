@@ -93,6 +93,10 @@ setup_zsh() {
   make_link "$dotdir/zsh/git-prompt.sh" "$HOME/.zsh_git-prompt.sh"
 }
 
+setup_bin() {
+  make_link "$dotdir/bin" "$HOME/bin"
+}
+
 main() {
   setup_git
   setup_vim
