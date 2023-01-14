@@ -19,6 +19,10 @@ set updatetime=1000
 " diagnostics appear/become resolved
 set signcolumn=yes
 
+
+" To fix an redrawtime exceeded syntax higlighting disabled error
+set redrawtime=0
+
 " Use tab for trigger completion with characters ahead and navigate
 " NOTE: There's always complete item selected by default, you may want to enable
 " no select by `"suggest.noselect": true` in your configuration file
