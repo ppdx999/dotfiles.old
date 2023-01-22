@@ -7,6 +7,7 @@ set fileencodings=utf-8,sjis,ucs-boms,euc-jp,cp932
 syntax enable
 filetype on
 
+set regexpengine=0
 set ambiwidth=double
 set nobackup
 set nowritebackup
