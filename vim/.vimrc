@@ -108,6 +108,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'preservim/nerdtree'
   Plug 'tpope/vim-commentary'
   Plug 'yuttie/comfortable-motion.vim'
+  Plug 'nathanaelkane/vim-indent-guides'
+  Plug 'ekalinin/Dockerfile.vim'
 call plug#end()
 
 runtime! plugins/*.vim
