@@ -15,9 +15,15 @@
         "elmTestPath": "elm-test",
         "elmAnalyseTrigger": "change"
       }
-    }
+    },
+    "haskell": {
+        "command": "haskell-language-server-wrapper",
+        "args": ["--lsp"],
+        "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
+        "filetypes": ["haskell", "lhaskell"]
+      }
   },
-  "[elm][typescript]": {
+  "[elm][typescript][haskell]": {
     "coc.preferences.formatOnSave": true
    }
 }
