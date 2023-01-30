@@ -110,6 +110,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'yuttie/comfortable-motion.vim'
   Plug 'nathanaelkane/vim-indent-guides'
   Plug 'ekalinin/Dockerfile.vim'
+  Plug 'neoclide/npm.nvim', {'do' : 'npm install'}
 call plug#end()
 
 runtime! plugins/*.vim
