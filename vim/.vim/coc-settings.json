@@ -17,7 +17,12 @@
       }
     }
   },
-  "[elm][typescript]": {
+  "[elm][typescript][typescriptreact]": {
     "coc.preferences.formatOnSave": true
+   },
+   "[typescript][typescriptreact]" : {
+    "coc.preferences.formatOnSave": true,
+    "eslint.autoFixOnSave": true,
+    "eslint.format.enable": true
    }
 }
