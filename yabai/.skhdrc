@@ -1,0 +1,53 @@
+# open terminal
+alt - return : /Applications/iTerm.app/Contents/MacOS/iTerm2 --single-instance -d ~ &> /dev/null
+
+# focus window
+alt - h : yabai -m window --focus west
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - l : yabai -m window --focus east
+
+# focus monitor
+alt - m : yabai -m display --focus prev
+alt - u : yabai -m display --focus next
+
+# swap window
+shift + alt - h : yabai -m window --swap west
+shift + alt - j : yabai -m window --swap south
+shift + alt - k : yabai -m window --swap north
+shift + alt - l : yabai -m window --swap east
+
+# send window to monitor and follow focus
+shift + alt - m : yabai -m window --display prev && yabai -m display --focus prev
+shift + alt - u : yabai -m window --display next && yabai -m display --focus next
+
+
+# balance size of windows
+alt - 0 : yabai -m space --balance
+
+# increase window size
+alt - a : yabai -m window --resize left:-20:0
+alt - s : yabai -m window --resize bottom:0:20
+alt - w : yabai -m window --resize top:0:-20
+alt - d : yabai -m window --resize right:20:0
+
+# decrease window size
+shift + alt - a : yabai -m window --resize left:20:0
+shift + alt - s : yabai -m window --resize bottom:0:-20
+shift + alt - w : yabai -m window --resize top:0:20
+shift + alt - d : yabai -m window --resize right:-20:0
+
+# rotate tree
+alt - r : yabai -m space --rotate 90
+
+# mirror tree y-axis
+alt - y : yabai -m space --mirror y-axis
+
+# mirror tree x-axis
+alt - x : yabai -m space --mirror x-axis
+
+# toggle window fullscreen zoom
+alt - f : yabai -m window --toggle zoom-fullscreen
+
+# toggle window native fullscreen
+shift + alt - f : yabai -m window --toggle native-fullscreen

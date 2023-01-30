@@ -97,14 +97,20 @@ setup_bin() {
   make_link "$dotdir/bin" "$HOME/bin"
 }
 
+setup_yabai() {
+  make_link "$dotdir/yabai/.skhdrc" "$HOME/.skhdrc"
+  make_link "$dotdir/yabai/.yabairc" "$HOME/.yabairc"
+}
+
 main() {
-  setup_git
-  setup_vim
-  case $SHELL in
-  */zsh) setup_zsh ;;
-  */bash) setup_bash ;;
-  *) ;;
-  esac
+  # setup_git
+  # setup_vim
+  # case $SHELL in
+  # */zsh) setup_zsh ;;
+  # */bash) setup_bash ;;
+  # *) ;;
+  # esac
+  setup_yabai
 }
 
 main "$@"
