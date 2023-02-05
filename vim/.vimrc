@@ -12,7 +12,7 @@ set ambiwidth=double
 set nobackup
 set nowritebackup
 set number
-set wrap
+set nowrap
 set nowrapscan
 set showmatch
 set autoindent
@@ -61,6 +61,8 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
 nnoremap <Space>f :Ve<CR>
+nnoremap <Space>v :vs<CR>
+nnoremap <Space>s :sp<CR>
 
 nnoremap <silent> tt  :<C-u>tabe<CR>
 nnoremap ]t :tabn<CR>
@@ -105,12 +107,16 @@ call plug#begin('~/.vim/plugged')
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'tpope/vim-surround'
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-  Plug 'preservim/nerdtree'
+  " Plug 'preservim/nerdtree'
   Plug 'tpope/vim-commentary'
   Plug 'yuttie/comfortable-motion.vim'
   Plug 'nathanaelkane/vim-indent-guides'
   Plug 'ekalinin/Dockerfile.vim'
   Plug 'neoclide/npm.nvim', {'do' : 'npm install'}
+  Plug 'lambdalisue/fern.vim'
+  " Plug 'ghifarit53/tokyonight-vim'
+  Plug 'morhetz/gruvbox'
+  Plug 'dense-analysis/ale'
 call plug#end()
 
 runtime! plugins/*.vim

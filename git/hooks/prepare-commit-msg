@@ -1,0 +1,27 @@
+#!/bin/sh
+
+GIT_ROOT=$(git rev-parse --show-superproject-working-tree --show-toplevel | head -1)
+HOOK_NAME=$(basename "$0")
+LOCAL_HOOK="${GIT_ROOT}/.git/hooks/${HOOK_NAME}"
+
+if [ -e "$LOCAL_HOOK" ]; then
+  # shellcheck source=/dev/null
+   . "$LOCAL_HOOK"
+else
+
+  #
+  # Automatically adds branch name and branch description to every commit message.
+  #
+
+  COMMIT_MSG_FILE=$1
+
+  NAME=$(git branch | grep "\*" | sed "s/* //") 
+  DESCRIPTION=$(git config branch."$NAME".description)
+
+  echo "$NAME"': '"$(cat "$COMMIT_MSG_FILE")" > "$COMMIT_MSG_FILE"
+  if [ -n "$DESCRIPTION" ] 
+  then
+     echo "" >> "$1"
+     echo "$DESCRIPTION" >> "$1"
+  fi 
+fi

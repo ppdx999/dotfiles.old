@@ -23,7 +23,7 @@
         "filetypes": ["haskell", "lhaskell"]
       }
   },
-  "[elm][typescript][typescriptreact][haskell]": {
+  "[elm][haskell]": {
     "coc.preferences.formatOnSave": true
    },
    "[typescript][typescriptreact]" : {

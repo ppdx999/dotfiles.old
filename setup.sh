@@ -81,6 +81,10 @@ setup_git() {
   git config --global user.email "ppdx999@gmail.com"
   git config --global user.name "ppdx999"
   git config --global core.editor "vim"
+  git config --global --add merge.ff false
+  git config --global --add pull.ff only
+  git config --global core.hooksPath "$HOME/.git_hooks"
+  make_link "$dotdir/git/hooks" "$HOME/.git_hooks"
 }
 
 setup_bash() {
@@ -103,6 +107,7 @@ setup_yabai() {
 }
 
 main() {
+  :
   # setup_git
   # setup_vim
   # case $SHELL in
@@ -110,7 +115,7 @@ main() {
   # */bash) setup_bash ;;
   # *) ;;
   # esac
-  setup_yabai
+  # setup_yabai
 }
 
 main "$@"

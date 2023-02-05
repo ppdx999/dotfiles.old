@@ -6,10 +6,12 @@ alt - h : yabai -m window --focus west
 alt - j : yabai -m window --focus south
 alt - k : yabai -m window --focus north
 alt - l : yabai -m window --focus east
+# alt - h : yabai -m window --focus prev
+# alt - l : yabai -m window --focus next
 
 # focus monitor
-alt - m : yabai -m display --focus prev
 alt - u : yabai -m display --focus next
+alt - m : yabai -m display --focus prev
 
 # swap window
 shift + alt - h : yabai -m window --swap west
@@ -18,8 +20,8 @@ shift + alt - k : yabai -m window --swap north
 shift + alt - l : yabai -m window --swap east
 
 # send window to monitor and follow focus
-shift + alt - m : yabai -m window --display prev && yabai -m display --focus prev
 shift + alt - u : yabai -m window --display next && yabai -m display --focus next
+shift + alt - m : yabai -m window --display prev && yabai -m display --focus prev
 
 
 # balance size of windows

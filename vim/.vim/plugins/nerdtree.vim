@@ -1,3 +1,4 @@
+finish
 if exists("g:vimrc_loaded_nerdtree")
   finish
 endif
