@@ -1,9 +1,32 @@
 #############################
 # ENV
-############################
+#############################
 
-# Homebrew to set PATH, MANPATH, etc.
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# Setting for macOS
+if [[ $(uname) == "Darwin" ]]; then
+  # Homebrew to set PATH, MANPATH, etc.
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+
+  # NVM 
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+  # Java Setup
+  # 1. Install java via homebrew
+  #   $ brew install openjdk
+  # 2. Create symlink for the system Java wrappers to find this JDK
+  #   $ sudo ln -sfn /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-17.jdk
+  # 3. Add PATH
+  export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+
+  # Python bin
+  export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+
+  # Add $HOME/bin $HOME/.local/bin to $PATH
+  export PATH="$HOME/bin:$PATH"
+  export PATH="$HOME/.local/bin:$PATH"
+fi
 
 # Zsh-completions
 if type brew &>/dev/null; then
@@ -24,27 +47,6 @@ autoload -Uz compinit && compinit
 
 # set default editor to vim
 export EDITOR=vim
-
-# NVM 
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
-# Java Setup
-# 1. Install java via homebrew
-#   $ brew install openjdk
-# 2. Create symlink for the system Java wrappers to find this JDK
-#   $ sudo ln -sfn /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-17.jdk
-# 3. Add PATH
-export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
-
-# Python bin
-export PATH="$HOME/Library/Python/3.9/bin:$PATH"
-
-# Add $HOME/bin $HOME/.local/bin to $PATH
-export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-
 
 ############################
 # ALIAS
