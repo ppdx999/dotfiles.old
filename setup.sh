@@ -85,6 +85,7 @@ setup_git() {
   git config --global --add pull.ff only
   git config --global core.hooksPath "$HOME/.git_hooks"
   make_link "$dotdir/git/hooks" "$HOME/.git_hooks"
+  git config --global alias.tree 'log --graph --all --format="%x09%C(cyan bold)%an%Creset%x09%C(yellow)%h%Creset %C(magenta reverse)%d%Creset %s"'
 }
 
 setup_bash() {
