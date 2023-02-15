@@ -3,7 +3,6 @@ if exists("g:loaded_Neoclide_coc")
 endif
 
 let g:loaded_Neoclide_coc = 1
-
 " May need for Vim (not Neovim) since coc.nvim calculates byte offset by count
 " utf-8 byte sequence
 set encoding=utf-8
@@ -168,3 +167,9 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+function! InstallCocExtentions()
+  CocInstall -sync coc-tsserver coc-sh coc-python coc-yaml coc-prettier
+  CocInstall -sync coc-eslint coc-pairs coc-json @yaegassy/coc-tailwindcss3
+endfunction
+
