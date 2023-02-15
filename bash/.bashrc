@@ -62,20 +62,9 @@ alias v='vim'
 ############################
 # PROMPT
 ############################
-PS1='\[\e[1;32m\]\u\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]:$\[\e[0m\] '
-
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
-esac
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
 esac
 
 # enable color support of ls and also add handy aliases
@@ -84,4 +73,21 @@ if [ -x /usr/bin/dircolors ]; then
     alias ls='ls --color=auto'
     alias grep='grep --color=auto'
 fi
+
+# Git Prompt
+if [ -f "$HOME/.bash_completions/git-completion.bash" ]; then
+    source "$HOME/.bash_completions/git-completion.bash" 
+fi
+
+if [ -f "$HOME/.bash_completions/git-prompt.sh" ]; then
+    source "$HOME/.bash_completions/git-prompt.sh"
+fi
+
+GIT_PS1_SHOWDIRTYSTATE=true
+GIT_PS1_SHOWUNTRACKEDFILES=true
+GIT_PS1_SHOWSTASHSTATE=true
+GIT_PS1_SHOWUPSTREAM=auto
+
+# PS1="\[\033[1;32m\]\$(date +%Y/%m/%d_%H:%M:%S)\[\033[0m\] \[\033[33m\]\H:\w\n\[\033[0m\][\u@ \W]\[\033[36m\]\$(__git_ps1)\[\033[00m\]\$ "
+PS1="\[\e[1;31m\][\u@\h]\[\e[0m\] \[\e[1;32m\]\w\[\e[0m\]\[\e[1;36m\]\$(__git_ps1)\[\e[0m\] \$ "
 
