@@ -90,6 +90,7 @@ setup_git() {
 
 setup_bash() {
   make_link "$dotdir/bash/.bashrc" "$HOME/.bashrc"
+  make_link "$dotdir/bash/completions" "$HOME/.bash_completions"
 }
 
 setup_zsh() {
