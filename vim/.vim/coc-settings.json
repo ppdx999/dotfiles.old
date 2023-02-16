@@ -30,5 +30,10 @@
     "coc.preferences.formatOnSave": true,
     "eslint.autoFixOnSave": true,
     "eslint.format.enable": true
-   }
+   },
+   "jedi": {
+    "enable": true,
+    "startupMessage": false,
+    "executable.command": "jedi-language-server"
+  }
 }

@@ -169,7 +169,7 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 function! InstallCocExtentions()
-  CocInstall -sync coc-tsserver coc-sh coc-python coc-yaml coc-prettier
+  CocInstall -sync coc-tsserver coc-sh coc-yaml coc-prettier coc-jedi
   CocInstall -sync coc-eslint coc-pairs coc-json @yaegassy/coc-tailwindcss3
 endfunction
 
