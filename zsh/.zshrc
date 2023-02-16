@@ -55,6 +55,13 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+function ranger() {
+    if [ -z "$RANGER_LEVEL" ]; then
+        /opt/homebrew/bin/ranger $@
+    else
+        exit
+    fi
+}
 
 ############################
 # PROMPT
