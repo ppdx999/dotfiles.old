@@ -117,6 +117,7 @@ call plug#begin('~/.vim/plugged')
   " Plug 'ghifarit53/tokyonight-vim'
   Plug 'morhetz/gruvbox'
   Plug 'dense-analysis/ale'
+  Plug 'airblade/vim-gitgutter'
 call plug#end()
 
 runtime! plugins/*.vim
