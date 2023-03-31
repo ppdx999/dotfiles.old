@@ -232,7 +232,7 @@ plugins = {
       -- Search workspace symbols
       keyset("n", "<space>s", ":<C-u>CocList -I symbols<cr>", opts)
       -- Do default action for next item
-      keyset("n", "<space>j", ":<C-u>CocNext<cr>", opts)
+      -- keyset("n", "<space>j", ":<C-u>CocNext<cr>", opts)
       -- Do default action for previous item
       keyset("n", "<space>k", ":<C-u>CocPrev<cr>", opts)
       -- Resume latest coc list
