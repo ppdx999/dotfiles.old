@@ -77,6 +77,10 @@ setup_vim() {
   make_link "$dotdir/vim/.vimrc" "$HOME/.vimrc"
 }
 
+setup_nvim(){
+  make_link "$dotdir/nvim" "$HOME/.config/nvim"
+}
+
 setup_git() {
   git config --global user.email "ppdx999@gmail.com"
   git config --global user.name "ppdx999"

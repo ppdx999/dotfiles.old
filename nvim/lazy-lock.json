@@ -1,0 +1,10 @@
+{
+  "coc.nvim": { "branch": "master", "commit": "628f08a0bf625f1a9872608c33638f48410d171e" },
+  "comfortable-motion.vim": { "branch": "master", "commit": "e20aeafb07c6184727b29f7674530150f7ab2036" },
+  "copilot.vim": { "branch": "release", "commit": "b6e5624351ba735e25eb8864d7d22819aad00606" },
+  "fern.vim": { "branch": "main", "commit": "dae5eb2debe023fce0e3dfafbf879bd89946d6d0" },
+  "gruvbox.nvim": { "branch": "main", "commit": "1a8ba635e511148801b55a1128aef933c296a301" },
+  "lazy.nvim": { "branch": "main", "commit": "57cce98dfdb2f2dd05a0567d89811e6d0505e13b" },
+  "vim-gitgutter": { "branch": "master", "commit": "44dbd57dd19e8ec58b2a50c787c8ae7bb231c145" },
+  "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" }
+}
