@@ -32,6 +32,13 @@ vim.o.ttimeoutlen = 50
 -- keymaps
 vim.api.nvim_set_keymap("n", "<leader>w", ":<c-u>w<cr>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>q", ":<c-u>q<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>v", ":<c-u>vs<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<c-h>", "<c-w><c-h>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<c-j>", "<c-w><c-j>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<c-k>", "<c-w><c-k>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<c-l>", "<c-w><c-l>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "H", "^", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "L", "$", { noremap = true, silent = true })
 
 -- plugins
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -252,6 +259,7 @@ plugins = {
   "github/copilot.vim",
   "airblade/vim-gitgutter",
   "tpope/vim-surround",
+  "tpope/vim-commentary",
   "yuttie/comfortable-motion.vim",
   {
     "ellisonleao/gruvbox.nvim",
