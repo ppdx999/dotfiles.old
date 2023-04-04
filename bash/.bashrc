@@ -54,10 +54,9 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-alias ts-node='node_modules/.bin/ts-node' # alias for ts-node
 alias cdw='cd ~/workspace' # alias for ts-node
 alias v='vim'
-alias v='vim'
+alias nv='nvim'
 
 ############################
 # PROMPT
