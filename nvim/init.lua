@@ -254,6 +254,14 @@ plugins = {
     },
     config = function()
       vim.g["fern#default_hidden"] = 1
+      local function init_fern()
+        vim.api.nvim_buf_set_keymap(0, "n", "<c-l>", "<c-w><c-l>", { noremap = true, silent = true })
+        vim.api.nvim_buf_set_keymap(0, "n", "D", "<Plug>(fern-action-remove)", { noremap = true, silent = true })
+      end
+
+      vim.api.nvim_create_augroup("fern-custom", { clear = true})
+      vim.api.nvim_create_autocmd("Filetype", { group = "fern-custom", pattern = "fern", callback = init_fern })
+
     end,
   },
   "github/copilot.vim",
@@ -269,4 +277,5 @@ plugins = {
     end
   },
 }
+
 require('lazy').setup(plugins)
