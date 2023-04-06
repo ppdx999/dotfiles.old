@@ -269,6 +269,7 @@ plugins = {
   "tpope/vim-surround",
   "tpope/vim-commentary",
   "yuttie/comfortable-motion.vim",
+  'iamcco/markdown-preview.nvim',
   {
     "ellisonleao/gruvbox.nvim",
     config = function()
