@@ -81,6 +81,10 @@ setup_nvim(){
   make_link "$dotdir/nvim" "$HOME/.config/nvim"
 }
 
+setup_tmux(){
+  make_link "$dotdir/tmux/.tmux.conf" "$HOME/.tmux.conf"
+}
+
 setup_git() {
   git config --global user.email "ppdx999@gmail.com"
   git config --global user.name "ppdx999"
@@ -116,6 +120,7 @@ setup_yabai() {
 
 main() {
   :
+  # setup_tmux
   # setup_git
   # setup_vim
   # case $SHELL in
