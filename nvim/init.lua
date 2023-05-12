@@ -270,6 +270,8 @@ plugins = {
   "tpope/vim-commentary",
   "yuttie/comfortable-motion.vim",
   'iamcco/markdown-preview.nvim',
+  'norcalli/nvim-colorizer.lua',
+  'junegunn/vim-easy-align',
   {
     "ellisonleao/gruvbox.nvim",
     config = function()
